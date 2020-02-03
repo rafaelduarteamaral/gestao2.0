@@ -8,11 +8,12 @@ import Layout from '@/views/layout/Layout'
 
 /* Router Modules */
 // import chartsRouter from './modules/charts'
-import productsRouter from './modules/products'
+// import productsRouter from './modules/products'
+import cadastroRouter from './modules/cadastro'
 import ordersRouter from './modules/orders'
-import couponsRouter from './modules/coupons'
-import usersRouter from './modules/users'
-import relatoriosRouter from './modules/relatorios'
+// import couponsRouter from './modules/coupons'
+// import usersRouter from './modules/users'
+// import relatoriosRouter from './modules/relatorios'
 
 /** note: Submenu only appear when children.length>=1
  *  detail see  https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -88,18 +89,19 @@ export const constantRouterMap = [
         name: 'Dashboard',
         meta: {
           title: 'dashboard',
-          icon: 'dashboard',
+          icon: 'component',
           noCache: true
         }
       }
     ]
   },
   // chartsRouter,
-  productsRouter,
-  ordersRouter,
-  couponsRouter,
-  usersRouter,
-  relatoriosRouter
+  // productsRouter,
+  cadastroRouter,
+  ordersRouter
+  // couponsRouter,
+  // usersRouter,
+  // relatoriosRouter
 ]
 
 export default new Router({
