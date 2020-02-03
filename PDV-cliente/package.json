@@ -1,0 +1,67 @@
+{
+  "name": "ecommerce-client",
+  "version": "0.1.0",
+  "description": "E-commerce Realtime Client",
+  "author": "Rafael Amaral",
+  "private": true,
+  "scripts": {
+    "dev": "vue-cli-service serve",
+    "production": "vue-cli-service build",
+    "development": "vue-cli-service build --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "css",
+    "js",
+    "html",
+    "template",
+    "ecommerce",
+    "vuejs",
+    "theme",
+    "responsive"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-runtime": "^6.26.0",
+    "bulma": "^0.7.2",
+    "js-cookie": "^2.2.0",
+    "lodash": "^4.17.11",
+    "nprogress": "^0.2.0",
+    "vue": "^2.5.21",
+    "vue-router": "^3.0.2",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.2.3",
+    "@fortawesome/fontawesome-free": "^5.6.3",
+    "@vue/cli-plugin-babel": "^3.2.2",
+    "@vue/cli-service": "^3.2.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": "plugin:vue/essential",
+    "rules": {}
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}
