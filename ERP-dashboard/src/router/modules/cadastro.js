@@ -41,6 +41,20 @@ export default {
       component: () => import('@/views/users/index'),
       name: 'todosUsuarios',
       meta: { title: 'Usuários' }
+    },
+    {
+      path: 'novoUsuario',
+      component: () => import('@/views/users/editor'),
+      name: 'NewUser',
+      meta: { title: 'Novo Usuário' },
+      hidden: true
+    },
+    {
+      path: 'usuario/:id',
+      component: () => import('@/views/users/editor'),
+      name: 'EditUser',
+      meta: { title: 'Editar Usuário' },
+      hidden: true
     }
   ]
 }
