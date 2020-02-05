@@ -24,7 +24,16 @@ class UserTransformer extends TransformerAbstract {
       cpf: model.cpf,
       rg: model.rg,
       telefone1: model.telefone1,
-      telefone2: model.telefone2
+      telefone2: model.telefone2,
+      endereco: {
+        logradouro: model.logradouro,
+        cep: model.cep,
+        numero: model.numero,
+        cidade: model.cidade,
+        complemento: model.complemento,
+        bairro: model.bairro,
+        uf: model.uf,
+      }
     }
   }
 

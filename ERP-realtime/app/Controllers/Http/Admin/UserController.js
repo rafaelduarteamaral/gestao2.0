@@ -4,7 +4,10 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 const User = use('App/Models/User')
+const Endereco = use('App/Models/Endereco')
+const Database = use('Database')
 const Transformer = use('App/Transformers/Admin/UserTransformer')
+const EnderecoTransformer = use('App/Transformers/Admin/EnderecoTransformer')
 /**
  * Resourceful controller for interacting with users
  */
@@ -21,14 +24,18 @@ class UserController {
   async index({ request, response, pagination, transform }) {
     const name = request.input('name')
     const query = User.query()
+    query.leftJoin('enderecos', 'users.id', 'enderecos.user_id')
+
     if (name) {
       query.where('name', 'LIKE', `%${name}%`)
       query.orWhere('surname', 'LIKE', `%${name}%`)
       query.orWhere('email', 'LIKE', `%${name}%`)
     }
 
+
     var users = await query.paginate(pagination.page, pagination.limit)
     users = await transform.paginate(users, Transformer)
+    
     return response.send(users)
   }
 
@@ -41,6 +48,7 @@ class UserController {
    * @param {Response} ctx.response
    */
   async store({ request, response, transform }) {
+    const trx = await Database.beginTransaction()
     try {
       const userData = request.only([
         'name',
@@ -54,10 +62,26 @@ class UserController {
         'cpf'
       ])
 
-      var user = await User.create(userData)
+      const enderecoData = request.only([
+        'endereco'
+      ])
+
+      // Cadastrando usuário
+      var user = await User.create(userData, trx)
       user = await transform.item(user, Transformer)
-      return response.status(201).send(user)
+
+      // Cadastrando endereço
+      var endereco = await Endereco.create({'user_id': user.id ,...enderecoData.endereco}, trx)
+      endereco = await transform.item(endereco, EnderecoTransformer)
+
+      // Preparando o retorno do usuário e endereco
+      user.endereco = endereco
+      trx.commit()
+
+      return response.status(201).send({user})
     } catch (error) {
+
+      trx.rollback()
       return response
         .status(400)
         .send(error)
@@ -88,22 +112,45 @@ class UserController {
    * @param {Response} ctx.response
    */
   async update({ params: { id }, request, response, transform }) {
-    var user = await User.findOrFail(id)
-    const userData = request.only([
-      'name',
-      'surname',
-      'email',
-      'password',
-      'cpf',
-      'rg',
-      'telefone1',
-      'telefone2',
-      'image_id',
-    ])
-    user.merge(userData)
-    await user.save()
-    user = await transform.item(user, Transformer)
-    return response.send(user)
+    const trx = await Database.beginTransaction()
+    try{
+      var user = await User.findOrFail(id)
+      var endereco = await Endereco.findBy('user_id', id)
+      const userData = request.only([
+        'name',
+        'surname',
+        'email',
+        'password',
+        'image_id',
+        'telefone1',
+        'telefone2',
+        'rg',
+        'cpf'
+      ])
+      const enderecoData = request.only([
+        'endereco'
+      ])
+      user.merge(userData)
+      await user.save(trx)
+      if(endereco){
+        endereco.merge(enderecoData.endereco)
+        await endereco.save(trx)
+        endereco = await transform.item(endereco, EnderecoTransformer)
+      }else{
+        // Cadastrando endereço
+        var endereco = await Endereco.create({'user_id': id ,...enderecoData.endereco}, trx)
+        endereco = await transform.item(endereco, EnderecoTransformer)
+      }
+      var user = Object.assign(user, endereco)
+      user = await transform.item(user, Transformer)
+      trx.commit()
+      return response.status(201).send(user);
+    }catch(erro){
+      trx.rollback()
+      return response
+      .status(400)
+      .send({ message: 'Não foi possível atualizar este Usuário!' })
+    }
   }
 
   /**
@@ -115,9 +162,13 @@ class UserController {
    * @param {Response} ctx.response
    */
   async destroy({ params: { id }, request, response }) {
-    const user = await User.findOrFail(id)
+    const user = await User.find(id)
+    const endereco = await Endereco.findBy('user_id', id)
     try {
       await user.delete()
+      if(endereco){
+        await endereco.delete()
+      }
       return response.status(204).send()
     } catch (error) {
       response

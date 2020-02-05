@@ -7,14 +7,14 @@ class EnderecoSchema extends Schema {
   up () {
     this.create('enderecos', (table) => {
       table.increments()
-      table.string('endereco', 100),
-      table.string('cep', 20),
-      table.string('rua', 50),
+      table.string('logradouro', 100),
+      table.string('cep', 15),
+      table.string('numero', 5),
       table.string('cidade', 80),
       table.string('complemento', 150),
       table.string('bairro', 150),
-      table.string('uf', 150),
-      table.string('casa', 50),
+      table.string('uf', 2),
+      table.string('casa', 10),
       table.integer('user_id').unsigned()
       table.timestamps(),
       table
