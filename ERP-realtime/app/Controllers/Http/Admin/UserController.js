@@ -109,7 +109,7 @@ class UserController {
     })
 
     user = {
-      'id': user.id,
+      'id': id,
       'name': user.name,
       'surname': user.surname,
       'email': user.email,
