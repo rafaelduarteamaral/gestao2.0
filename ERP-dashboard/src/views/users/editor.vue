@@ -16,107 +16,129 @@
               </el-button>
             </div>
             <el-col :span="10">
-              <el-form-item label="Nome">
+              <el-form-item label="Tipo:"><br>
+                <el-select v-model="formData.status">
+                  <el-option
+                    v-for="status in statuses"
+                    :key="status.value"
+                    :label="status.label"
+                    :value="status.value"
+                  />
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="10">
+              <el-form-item label="Nome:">
                 <el-input v-model="formData.name" type="text"/>
               </el-form-item>
             </el-col>
             <el-col :span="10">
-              <el-form-item label="Sobrenome">
+              <el-form-item label="Sobrenome:">
                 <el-input v-model="formData.surname" type="text"/>
               </el-form-item>
             </el-col>
             <el-col :span="10">
-              <el-form-item label="E-mail">
-                <el-input v-model="formData.email" type="text"/>
-              </el-form-item>
-            </el-col>
-            <el-col :span="10">
-              <el-form-item label="Telefone(1)">
+              <el-form-item label="Telefone 1:">
                 <el-input v-model="formData.telefone1" type="text"/>
               </el-form-item>
             </el-col>
             <el-col :span="10">
-              <el-form-item label="Telefone(2)">
+              <el-form-item label="Telefone 2:">
                 <el-input v-model="formData.telefone2" type="text"/>
               </el-form-item>
             </el-col>
             <el-col :span="10">
-              <el-form-item label="CPF">
-                <el-input v-model="formData.cpf" type="number" />
+              <el-form-item label="CPF:">
+                <el-input v-model="formData.cpf" type="text" />
               </el-form-item>
             </el-col>
             <el-col :span="10">
-              <el-form-item label="RG">
-                <el-input v-model="formData.rg" type="number" />
+              <el-form-item label="RG:">
+                <el-input v-model="formData.rg" type="text" />
               </el-form-item>
             </el-col>
             <el-col :span="10">
-              <el-form-item v-if="!isEdit" label="Senha">
+              <el-form-item label="E-mail:">
+                <el-input v-model="formData.email" type="text"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="10">
+              <el-form-item v-if="!isEdit" label="Senha:">
                 <el-input v-model="formData.password" type="password"/>
               </el-form-item>
             </el-col>
           </el-card>
         </el-col>
         <el-col :span="7">
-          <el-card class="box-card-component">
-            <div slot="header" class="box-card-header" @click="showMediaGallery = true">
-              <img
-                :src="formData.image ? formData.image.url : '/static/sem-imagem.png'"
-                :alt=" formData.image ? formData.image.original_name : 'Sem Imagem'"
-                :title=" formData.image ? formData.image.original_name : 'Clique para escolher uma imagem'"
-              >
+          <el-row style="margin-top:100px;">
+            <el-card class="box-card-component">
+              <!-- <el-card class="box-img-top"> -->
+              <div class="box-card-header" @click="showMediaGallery = true">
+                <img
+                  :src="formData.image ? formData.image.url : '/static/sem-imagem.png'"
+                  :alt=" formData.image ? formData.image.original_name : 'Sem Imagem'"
+                  :title=" formData.image ? formData.image.original_name : 'Clique para escolher uma imagem'"
+                >
+              </div>
+              <!-- </el-card> -->
+            </el-card>
+          </el-row>
+        </el-col>
+      </el-form>
+    </el-row>
+    <br>
+    <el-row :gutter="35">
+      <el-form ref="form" v-model="formData">
+        <el-col :span="35">
+          <el-card class="box-card">
+            <div slot="header">
+              <span>Informações adicionais</span>
             </div>
-            <el-row style="margin-top:20px;">
-              <el-button v-show="isEdit" type="danger" @click.prevent="showDeleteDialog = true">
-                <i class="el-icon-delete"/>
-              </el-button>
-              <el-button type="primary" style="float:right" @click="handleSave">Salvar</el-button>
-            </el-row>
+            <el-col :span="8">
+              <el-form-item label="CEP:">
+                <el-input v-model="formData.endereco.cep" type="text" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="13">
+              <el-form-item label="Logradouro:">
+                <el-input v-model="formData.endereco.logradouro" type="text" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="3">
+              <el-form-item label="Numero:">
+                <el-input v-model="formData.endereco.numero" type="number" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="5">
+              <el-form-item label="Cidade:">
+                <el-input v-model="formData.endereco.cidade" type="text" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="2">
+              <el-form-item label="UF:">
+                <el-input v-model="formData.endereco.uf" type="text" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <el-form-item label="Bairro:">
+                <el-input v-model="formData.endereco.bairro" type="text" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="8">
+              <el-form-item label="Complemento:">
+                <el-input v-model="formData.endereco.complemento" type="text" />
+              </el-form-item>
+            </el-col>
           </el-card>
         </el-col>
       </el-form>
     </el-row>
     <br>
-    <el-row v-if="isEdit" :gutter="20">
-      <el-form ref="form" v-model="formData">
-        <el-col :span="24">
-          <el-card class="box-card">
-            <div slot="header">
-              <span>Informações adicionais</span>
-            </div>
-            <el-col :span="10">
-              <el-form-item label="Cep">
-                <el-input v-model="formData.cep" type="number" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="10">
-              <el-form-item label="Cidade">
-                <el-input v-model="formData.cidade" type="text" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="10">
-              <el-form-item label="Rua">
-                <el-input v-model="formData.rua" type="text" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="10">
-              <el-form-item label="Bairro">
-                <el-input v-model="formData.bairro" type="text" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="10">
-              <el-form-item label="Casa">
-                <el-input v-model="formData.casa" type="text" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="10">
-              <el-form-item label="Complemento">
-                <el-input v-model="formData.complemento" type="text" />
-              </el-form-item>
-            </el-col>
-          </el-card>
-        </el-col>
-      </el-form>
+    <el-row>
+      <el-button v-show="isEdit" type="danger" @click.prevent="showDeleteDialog = true">
+        <i class="el-icon-delete"/>
+      </el-button>
+      <el-button type="primary" style="float:right" @click="handleSave">Salvar</el-button>
     </el-row>
     <!-- galeria de imagens -->
     <media-manager
@@ -153,14 +175,15 @@ const defaultForm = {
   telefone2: '',
   image_id: undefined,
   password: '',
-  cep: '',
-  cidade: '',
-  endereco: '',
-  rua: '',
-  bairro: '',
-  complemento: '',
-  casa: '',
-  user_id: ''
+  endereco: {
+    cep: '',
+    uf: '',
+    cidade: '',
+    bairro: '',
+    complemento: '',
+    numero: '',
+    logradouro: ''
+  }
 }
 import { mapGetters } from 'vuex'
 import MediaManager from '@/components/MediaManager'
@@ -179,15 +202,13 @@ export default {
       showMediaGallery: false,
       showDeleteDialog: false,
       showSettingsDialog: false,
-      usuarioFind: '',
-      enderecoFind: ''
+      usuarioFind: ''
     }
   },
 
   computed: {
     ...mapGetters({
-      user: 'currentUser',
-      endereco: 'currentEndereco'
+      user: 'currentUser'
     })
   },
 
@@ -202,9 +223,7 @@ export default {
 
   mounted() {
     if (this.isEdit) {
-      this.formData.user_id = this.$route.params.id
       this.findUser(this.$route.params.id)
-      this.findEndereco(this.$route.params.id)
     }
   },
 
@@ -218,35 +237,10 @@ export default {
       })
     },
 
-    findEndereco(id) {
-      this.loading = true
-      this.$store.dispatch('findEnderecoUser', id).then(() => {
-        this.loading = false
-        this.enderecoFind = this.endereco
-        this.fillForm()
-      })
-    },
-
     fillForm() {
       this.formData = Object.assign({}, this.usuarioFind, this.enderecoFind)
       this.updateNavigationTab()
       console.log(this.enderecoFind)
-    },
-
-    handleSaveEndereco() {
-      this.loading = true
-      this.$store
-        .dispatch('saveEndereco', this.prepareToSave(this.formData))
-        .then(() => {
-          this.loading = false
-          this.$message({
-            message: 'Salvo com sucesso!',
-            type: 'success',
-            showClose: true,
-            duration: 1000
-          })
-          this.updateNavigationTab()
-        })
     },
 
     handleSave() {
@@ -270,7 +264,6 @@ export default {
             })
           }
         })
-      this.handleSaveEndereco()
     },
 
     handleDestroy() {
@@ -299,23 +292,24 @@ export default {
     prepareToSave(data) {
       return {
         id: data.id,
-        id_endereco: data.id_endereco,
-        user_id: data.id,
         name: data.name,
         surname: data.surname,
-        email: data.email,
         telefone1: data.telefone1,
         telefone2: data.telefone2,
+        email: data.email,
         cpf: data.cpf,
         rg: data.rg,
         image_id: data.image_id,
         password: data.password ? data.password : undefined,
-        cep: data.cep,
-        cidade: data.cidade,
-        rua: data.rua,
-        bairro: data.bairro,
-        casa: data.casa,
-        complemento: data.complemento
+        endereco: {
+          cep: data.endereco.cep,
+          cidade: data.endereco.cidade,
+          numero: data.endereco.numero,
+          bairro: data.endereco.bairro,
+          uf: data.endereco.uf,
+          logradouro: data.endereco.logradouro,
+          complemento: data.endereco.complemento
+        }
       }
     },
 
@@ -343,18 +337,18 @@ export default {
 <style rel="stylesheet/scss" lang="scss">
 .box-card-component {
   .el-card__header {
-    padding: 0px !important;
+    padding: 0px;
   }
 }
 
 .box-card-component {
   .box-card-header {
     position: relative;
-    height: 270px;
+    height: 230px;
     img {
       width: 100%;
       height: 100%;
-      transition: all 0.2s linear;
+      transition: all 0.5s linear;
       &:hover {
         transform: scale(1.1, 1.1);
         filter: contrast(130%);
@@ -364,3 +358,4 @@ export default {
   }
 }
 </style>
+
