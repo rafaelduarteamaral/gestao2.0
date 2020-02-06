@@ -98,8 +98,36 @@ class UserController {
    * @param {View} ctx.view
    */
   async show({ params: { id }, response, transform }) {
-    var user = await User.findOrFail(id)
-    user = await transform.item(user, Transformer)
+    var user = await Database.select('*')
+    .from('users')
+    .leftJoin('enderecos', 'users.id', 'enderecos.user_id')
+    .where('users.id', '=', id)
+    .limit(1)
+
+    user.forEach((obj) => {
+      user = obj
+    })
+
+    user = {
+      'id': user.id,
+      'name': user.name,
+      'surname': user.surname,
+      'email': user.email,
+      'cpf': user.cpf,
+      'rg': user.rg,
+      'telefone1': user.telefone1,
+      'telefone2': user.telefone2,
+      'endereco': {
+        'logradouro': user.logradouro,
+        'cep': user.cep,
+        'numero': user.numero,
+        'cidade': user.cidade,
+        'complemento': user.complemento,
+        'bairro': user.bairro,
+        'uf': user.uf,
+      }
+    }
+    //user = await transform.item(user, Transformer)
     return response.send(user)
   }
 

@@ -14,7 +14,6 @@ class EnderecoSchema extends Schema {
       table.string('complemento', 150),
       table.string('bairro', 150),
       table.string('uf', 2),
-      table.string('casa', 10),
       table.integer('user_id').unsigned()
       table.timestamps(),
       table
