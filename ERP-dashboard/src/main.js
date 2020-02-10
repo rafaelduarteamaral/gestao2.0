@@ -18,6 +18,9 @@ import './permission' // permission control
 
 import * as filters from './filters' // global filters
 
+import VueTheMask from 'vue-the-mask'
+Vue.use(VueTheMask)
+
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
   locale

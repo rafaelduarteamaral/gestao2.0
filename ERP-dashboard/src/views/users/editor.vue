@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 <template>
   <div class="app-container">
     <el-row :gutter="20">
@@ -15,7 +16,7 @@
                 <svg-icon icon-class="reset-pass"/>
               </el-button>
             </div>
-            <el-col :span="10">
+            <el-col :span="6">
               <el-form-item label="Tipo:"><br>
                 <el-select v-model="formData.status">
                   <el-option
@@ -27,9 +28,24 @@
                 </el-select>
               </el-form-item>
             </el-col>
+            <el-col :span="7">
+              <el-form-item label="CPF/CNPJ:">
+                <el-input v-mask="['###.###.###-##', '##.###.###/####-##']" v-model="formData.cpf_cnpj" type="text"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="7">
+              <el-form-item label="CNAE">
+                <el-input v-mask="'##.##-#-##'" v-model="formData.cnae" type="text" placeholder="Em caso de CNPJ"/>
+              </el-form-item>
+            </el-col>
             <el-col :span="10">
-              <el-form-item label="Nome:">
+              <el-form-item label="Nome/Razão Social:">
                 <el-input v-model="formData.name" type="text"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="10">
+              <el-form-item label="RG/Inscrição">
+                <el-input v-model="formData.rg" type="text"/>
               </el-form-item>
             </el-col>
             <el-col :span="10">
@@ -38,23 +54,18 @@
               </el-form-item>
             </el-col>
             <el-col :span="10">
+              <el-form-item label="Data de Nascimento:">
+                <el-input v-model="formData.d_nascimento" type="date"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="10">
               <el-form-item label="Telefone 1:">
-                <el-input v-model="formData.telefone1" type="text"/>
+                <el-input v-mask="'(##)#####-####'" v-model="formData.telefone1" type="text" placeholder="(00)00000-0000"/>
               </el-form-item>
             </el-col>
             <el-col :span="10">
               <el-form-item label="Telefone 2:">
-                <el-input v-model="formData.telefone2" type="text"/>
-              </el-form-item>
-            </el-col>
-            <el-col :span="10">
-              <el-form-item label="CPF:">
-                <el-input v-model="formData.cpf" type="text" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="10">
-              <el-form-item label="RG:">
-                <el-input v-model="formData.rg" type="text" />
+                <el-input v-mask="'(##)####-####'" v-model="formData.telefone2" type="text" placeholder="(00)0000-0000"/>
               </el-form-item>
             </el-col>
             <el-col :span="10">
@@ -92,16 +103,16 @@
         <el-col :span="35">
           <el-card class="box-card">
             <div slot="header">
-              <span>Informações adicionais</span>
+              <span>Informações de Endereço</span>
             </div>
             <el-col :span="8">
               <el-form-item label="CEP:">
-                <el-input v-model="formData.endereco.cep" type="text" />
+                <el-input v-mask="'#####-###'" v-model="formData.endereco.cep" type="text" @keyup.native="searchCep" />
               </el-form-item>
             </el-col>
             <el-col :span="13">
               <el-form-item label="Logradouro:">
-                <el-input v-model="formData.endereco.logradouro" type="text" />
+                <el-input v-model="formData.endereco.cep" type="text" />
               </el-form-item>
             </el-col>
             <el-col :span="3">
@@ -134,12 +145,27 @@
       </el-form>
     </el-row>
     <br>
-    <el-row>
-      <el-button v-show="isEdit" type="danger" @click.prevent="showDeleteDialog = true">
-        <i class="el-icon-delete"/>
-      </el-button>
-      <el-button type="primary" style="float:right" @click="handleSave">Salvar</el-button>
-    </el-row>
+    <el-form ref="form" v-model="formData" label-position="top">
+      <el-col :span="24">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>Informações complementares</span>
+          </div>
+          <el-form-item label="Descrição">
+            <el-input
+              v-model="formData.description"
+              :rows="8"
+              type="textarea"
+              placeholder="Descrição do Produto"
+            />
+          </el-form-item>
+        </el-card>
+      </el-col>
+    </el-form>
+    <el-button v-show="isEdit" type="danger" @click.prevent="showDeleteDialog = true">
+      <i class="el-icon-delete"/>
+    </el-button>
+    <el-button type="primary" style="float:right; margin-top: 20px;" @click="handleSave">Salvar</el-button>
     <!-- galeria de imagens -->
     <media-manager
       :visibility.sync="showMediaGallery"
@@ -161,20 +187,25 @@
     <el-dialog :visible.sync="showSettingsDialog" title="Opções">
       <span>Deseja resetar a senha deste usuário?</span>
     </el-dialog>
+    <pre>{{ formData.data }}</pre>
   </div>
 </template>
 <script>
 const defaultForm = {
   id: undefined,
   name: '',
+  data: '',
+  d_nascimento: '',
   surname: '',
   email: '',
   cpf: '',
   rg: '',
+  cnae: '',
   telefone1: '',
   telefone2: '',
   image_id: undefined,
   password: '',
+  description: '',
   endereco: {
     cep: '',
     uf: '',
@@ -187,6 +218,7 @@ const defaultForm = {
 }
 import { mapGetters } from 'vuex'
 import MediaManager from '@/components/MediaManager'
+import axios from 'axios'
 
 export default {
   name: 'UserEditor',
@@ -202,7 +234,17 @@ export default {
       showMediaGallery: false,
       showDeleteDialog: false,
       showSettingsDialog: false,
-      usuarioFind: ''
+      usuarioFind: '',
+      statuses: [
+        {
+          value: '1',
+          label: 'Pessoa Física'
+        },
+        {
+          value: '2',
+          label: 'Pessoa Jurídica'
+        }
+      ]
     }
   },
 
@@ -330,6 +372,22 @@ export default {
       })
 
       this.$store.dispatch('delVisitedView', route)
+    },
+
+    searchCep() {
+      if (this.formData.endereco.cep.length === 8) {
+        alert(this.formData.endereco.cep)
+        axios.get(`https://viacep.com.br/ws/${this.formData.endereco.cep}/json`)
+          .then(response => {
+            this.formData.endereco.uf = response.data.uf
+            this.formData.endereco.localidade = response.data.cidade
+            this.formData.endereco.logradouro = response.data.logradouro
+            this.formData.endereco.bairro = response.data.bairro
+            this.formData.endereco.cidade = response.data.localidade
+            return
+          })
+          .catch()
+      }
     }
   }
 }
@@ -344,7 +402,7 @@ export default {
 .box-card-component {
   .box-card-header {
     position: relative;
-    height: 230px;
+    height: 100%;
     img {
       width: 100%;
       height: 100%;
