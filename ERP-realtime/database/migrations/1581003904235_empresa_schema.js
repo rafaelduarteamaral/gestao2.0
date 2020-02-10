@@ -7,11 +7,12 @@ class EmpresaSchema extends Schema {
   up () {
     this.create('empresas', (table) => {
       table.increments()
-      table.string('nome', 100)
-      table.string('razaosocial', 150)
-      table.string('cnpj', 30)
-      table.string('inscricaoestadual', 200)
-      table.string('inscricaomunicipal', 200)
+      table.string('nome', 50)
+      table.string('razao_social', 100)
+      table.string('cnpj', 15)
+      table.string('cnae', 50)
+      table.string('inscricaoestadual', 50)
+      table.string('inscricaomunicipal', 50)
       table.timestamps()
     })
   }

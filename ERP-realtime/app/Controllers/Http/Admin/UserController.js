@@ -59,7 +59,7 @@ class UserController {
         'telefone1',
         'telefone2',
         'rg',
-        'cpf'
+        'cpf_cnpj'
       ])
 
       const enderecoData = request.only([
@@ -113,7 +113,7 @@ class UserController {
       'name': user.name,
       'surname': user.surname,
       'email': user.email,
-      'cpf': user.cpf,
+      'cpf_cnpj': user.cpf_cnpj,
       'rg': user.rg,
       'telefone1': user.telefone1,
       'telefone2': user.telefone2,
@@ -153,7 +153,7 @@ class UserController {
         'telefone1',
         'telefone2',
         'rg',
-        'cpf'
+        'cpf_cnpj'
       ])
       const enderecoData = request.only([
         'endereco'

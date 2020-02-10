@@ -35,6 +35,11 @@ Route.group(() => {
    */
   Route.resource('coupons', 'CouponController').apiOnly()
 
+  /** 
+   * Empresa Resource Routes 
+   */
+  Route.resource('empresas', 'EmpresaController').apiOnly()
+
   /**
    * Order Resource Routes
    */

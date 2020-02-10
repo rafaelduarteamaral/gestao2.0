@@ -21,7 +21,7 @@ class UserTransformer extends TransformerAbstract {
       name: model.name,
       surname: model.surname,
       email: model.email,
-      cpf: model.cpf,
+      cpf_cnpj: model.cpf_cnpj,
       rg: model.rg,
       telefone1: model.telefone1,
       telefone2: model.telefone2,
