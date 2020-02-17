@@ -19,12 +19,16 @@ class UserTransformer extends TransformerAbstract {
     return {
       id: model.id,
       name: model.name,
+      tipo: model.tipo,
       surname: model.surname,
       email: model.email,
       cpf_cnpj: model.cpf_cnpj,
       rg: model.rg,
+      cnae: model.cnae,
+      dt_nascimento: model.dt_nascimento,
       telefone1: model.telefone1,
       telefone2: model.telefone2,
+      descricao: model.descricao,
       endereco: {
         logradouro: model.logradouro,
         cep: model.cep,

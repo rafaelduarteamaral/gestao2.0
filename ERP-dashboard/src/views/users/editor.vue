@@ -18,12 +18,12 @@
             </div>
             <el-col :span="6">
               <el-form-item label="Tipo:"><br>
-                <el-select v-model="formData.status">
+                <el-select v-model="formData.tipo">
                   <el-option
-                    v-for="status in statuses"
-                    :key="status.value"
-                    :label="status.label"
-                    :value="status.value"
+                    v-for="tipo in tipo"
+                    :key="tipo.value"
+                    :label="tipo.label"
+                    :value="tipo.value"
                   />
                 </el-select>
               </el-form-item>
@@ -33,9 +33,9 @@
                 <el-input v-mask="['###.###.###-##', '##.###.###/####-##']" v-model="formData.cpf_cnpj" type="text"/>
               </el-form-item>
             </el-col>
-            <el-col :span="7">
+            <el-col v-if="formData.tipo == 2" :span="7">
               <el-form-item label="CNAE">
-                <el-input v-mask="'##.##-#-##'" v-model="formData.cnae" type="text" placeholder="Em caso de CNPJ"/>
+                <el-input v-mask="'##.##-#-##'" v-model="formData.cnae" type="text" placeholder="Em caso de PJ"/>
               </el-form-item>
             </el-col>
             <el-col :span="10">
@@ -44,18 +44,24 @@
               </el-form-item>
             </el-col>
             <el-col :span="10">
-              <el-form-item label="RG/Inscrição">
-                <el-input v-model="formData.rg" type="text"/>
-              </el-form-item>
-            </el-col>
-            <el-col :span="10">
               <el-form-item label="Sobrenome:">
                 <el-input v-model="formData.surname" type="text"/>
               </el-form-item>
             </el-col>
             <el-col :span="10">
+              <el-form-item label="RG/Inscrição">
+                <el-input v-model="formData.rg" type="text"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="10">
               <el-form-item label="Data de Nascimento:">
-                <el-input v-model="formData.d_nascimento" type="date"/>
+                <el-date-picker
+                  v-model="formData.dt_nascimento"
+                  format="dd/MM/yyyy"
+                  type="date"
+                  start-placeholder="Data de Nascimento"
+                  style="width:100%"
+                />
               </el-form-item>
             </el-col>
             <el-col :span="10">
@@ -81,7 +87,7 @@
           </el-card>
         </el-col>
         <el-col :span="7">
-          <el-row style="margin-top:100px;">
+          <el-row>
             <el-card class="box-card-component">
               <!-- <el-card class="box-img-top"> -->
               <div class="box-card-header" @click="showMediaGallery = true">
@@ -98,21 +104,21 @@
       </el-form>
     </el-row>
     <br>
-    <el-row :gutter="35">
+    <el-row :gutter="24">
       <el-form ref="form" v-model="formData">
-        <el-col :span="35">
+        <el-col :span="24">
           <el-card class="box-card">
             <div slot="header">
               <span>Informações de Endereço</span>
             </div>
             <el-col :span="8">
               <el-form-item label="CEP:">
-                <el-input v-mask="'#####-###'" v-model="formData.endereco.cep" type="text" @keyup.native="searchCep" />
+                <el-input v-model="formData.endereco.cep" type="text" @keyup.native="searchCep" />
               </el-form-item>
             </el-col>
             <el-col :span="13">
               <el-form-item label="Logradouro:">
-                <el-input v-model="formData.endereco.cep" type="text" />
+                <el-input v-model="formData.endereco.logradouro" type="text" />
               </el-form-item>
             </el-col>
             <el-col :span="3">
@@ -153,10 +159,10 @@
           </div>
           <el-form-item label="Descrição">
             <el-input
-              v-model="formData.description"
+              v-model="formData.descricao"
               :rows="8"
               type="textarea"
-              placeholder="Descrição do Produto"
+              placeholder="Descrição do Usuário"
             />
           </el-form-item>
         </el-card>
@@ -195,17 +201,17 @@ const defaultForm = {
   id: undefined,
   name: '',
   data: '',
-  d_nascimento: '',
+  dt_nascimento: '',
   surname: '',
   email: '',
-  cpf: '',
+  cpf_cnpj: '',
   rg: '',
   cnae: '',
   telefone1: '',
   telefone2: '',
   image_id: undefined,
   password: '',
-  description: '',
+  descricao: '',
   endereco: {
     cep: '',
     uf: '',
@@ -235,7 +241,7 @@ export default {
       showDeleteDialog: false,
       showSettingsDialog: false,
       usuarioFind: '',
-      statuses: [
+      tipo: [
         {
           value: '1',
           label: 'Pessoa Física'
@@ -282,7 +288,6 @@ export default {
     fillForm() {
       this.formData = Object.assign({}, this.usuarioFind, this.enderecoFind)
       this.updateNavigationTab()
-      console.log(this.enderecoFind)
     },
 
     handleSave() {
@@ -297,7 +302,6 @@ export default {
             showClose: true,
             duration: 1000
           })
-          this.fillForm()
           if (!this.isEdit) {
             this.deleteNavigationtab()
             this.$router.push({
@@ -339,10 +343,14 @@ export default {
         telefone1: data.telefone1,
         telefone2: data.telefone2,
         email: data.email,
-        cpf: data.cpf,
+        cpf_cnpj: data.cpf_cnpj,
+        cnae: data.cnae,
+        dt_nascimento: data.dt_nascimento,
+        descricao: data.descricao,
         rg: data.rg,
         image_id: data.image_id,
         password: data.password ? data.password : undefined,
+        tipo: data.tipo,
         endereco: {
           cep: data.endereco.cep,
           cidade: data.endereco.cidade,
@@ -376,7 +384,6 @@ export default {
 
     searchCep() {
       if (this.formData.endereco.cep.length === 8) {
-        alert(this.formData.endereco.cep)
         axios.get(`https://viacep.com.br/ws/${this.formData.endereco.cep}/json`)
           .then(response => {
             this.formData.endereco.uf = response.data.uf
@@ -415,5 +422,6 @@ export default {
     }
   }
 }
+
 </style>
 
