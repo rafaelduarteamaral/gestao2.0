@@ -55,6 +55,26 @@ export default {
       name: 'EditUser',
       meta: { title: 'Editar Usuário' },
       hidden: true
+    },
+    {
+      path: 'empresas',
+      component: () => import('@/views/empresa/index'),
+      name: 'Empresas',
+      meta: { title: 'Empresas' }
+    },
+    {
+      path: 'empresa/:id',
+      component: () => import('@/views/empresa/editor'),
+      nome: 'EditEmpresa',
+      meta: { title: ' Editar Empresa' },
+      hidden: true
+    },
+    {
+      path: 'novoEmpresa',
+      component: () => import('@/views/empresa/editor'),
+      name: 'NewEmpresa',
+      meta: { title: 'Nova Empresa' },
+      hidden: true
     }
   ]
 }
