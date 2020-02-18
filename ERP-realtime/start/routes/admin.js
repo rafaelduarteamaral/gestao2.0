@@ -41,6 +41,11 @@ Route.group(() => {
   Route.resource('empresas', 'EmpresaController').apiOnly()
 
   /**
+   * Formas de pagamentos
+   */
+  Route.resource('formasPagamentos', 'FormaPagamentoController').apiOnly()
+
+  /**
    * Order Resource Routes
    */
   Route.post('orders/:id/discount', 'OrderController.applyDiscount')

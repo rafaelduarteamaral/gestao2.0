@@ -9,6 +9,7 @@ import getters from './getters'
 import products from './modules/products'
 import orders from './modules/orders'
 import empresas from './modules/empresas'
+import formasPagamentos from './modules/formasPagamentos'
 import coupons from './modules/coupons'
 import categories from './modules/categories'
 import images from './modules/images'
@@ -33,7 +34,8 @@ const store = new Vuex.Store({
     users,
     dashboard,
     endereco,
-    empresas
+    empresas,
+    formasPagamentos
   },
   getters
 })

@@ -70,10 +70,30 @@ export default {
       hidden: true
     },
     {
-      path: 'novoEmpresa',
+      path: 'novaEmpresa',
       component: () => import('@/views/empresa/editor'),
       name: 'NewEmpresa',
       meta: { title: 'Nova Empresa' },
+      hidden: true
+    },
+    {
+      path: 'formasPagamentos',
+      component: () => import('@/views/formaPagamento/index'),
+      name: 'formasPagamentos',
+      meta: { title: 'Formas Pgto' }
+    },
+    {
+      path: 'formaPagamento',
+      component: () => import('@/views/formaPagamento/editor'),
+      name: 'NewFormaPagamento',
+      meta: { title: 'Nova Forma de Pagamento' },
+      hidden: true
+    },
+    {
+      path: 'formapPagamento/:id',
+      component: () => import('@/views/formaPagamento/editor'),
+      name: 'EditFormaPagamento',
+      meta: { title: 'Editar forma Pagamento' },
       hidden: true
     }
   ]
