@@ -65,8 +65,8 @@ export default {
     {
       path: 'empresa/:id',
       component: () => import('@/views/empresa/editor'),
-      nome: 'EditEmpresa',
-      meta: { title: ' Editar Empresa' },
+      name: 'EditEmpresa',
+      meta: { title: 'Editar Empresa' },
       hidden: true
     },
     {

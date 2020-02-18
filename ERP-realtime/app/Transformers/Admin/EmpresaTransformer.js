@@ -22,7 +22,10 @@ class EmpresaTransformer extends TransformerAbstract {
      cnae: model.cnae,
      inscricaoestadual: model.inscricaoestadual,
      inscricaomunicipal: model.inscricaomunicipal,
+     telefone1: model.telefone1,
+     telefone2: model.telefone2,
      endereco: {
+        fuso_hr: model.fuso_hr,
         logradouro: model.logradouro,
         cep: model.cep,
         numero: model.numero,

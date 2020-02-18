@@ -11,6 +11,8 @@ class EmpresaSchema extends Schema {
       table.string('razao_social', 100)
       table.string('cnpj', 15)
       table.string('cnae', 50)
+      table.string('telefone1', 19)
+      table.string('telefone2', 19)
       table.string('inscricaoestadual', 50)
       table.string('inscricaomunicipal', 50)
       table.timestamps()

@@ -6,18 +6,10 @@
           <el-card class="box-card" align="center">
             <div slot="header">
               <span>Informações da Empresa</span>
-              <el-button
-                v-if="isEdit"
-                type="primary"
-                style="float:right;margin-top:-5px"
-                @click="showSettingsDialog = true"
-              >
-                <svg-icon icon-class="reset-pass"/>
-              </el-button>
             </div>
             <el-col :span="5">
               <el-form-item label="CNPJ:">
-                <el-input v-mask="['##.###.###/####-##']" v-model="formData.cpf_cnpj" type="text" />
+                <el-input v-mask="['##.###.###/####-##']" v-model="formData.cnpj" type="text" />
               </el-form-item>
             </el-col>
             <el-col :span="5">
@@ -27,7 +19,7 @@
             </el-col>
             <el-col :span="7">
               <el-form-item label="Nome:">
-                <el-input v-model="formData.name" type="text"/>
+                <el-input v-model="formData.nome" type="text"/>
               </el-form-item>
             </el-col>
             <el-col :span="7">
@@ -69,7 +61,7 @@
             </div>
             <el-col :span="5">
               <el-form-item label="Fuso Horário:">
-                <el-select v-model="formData.fuso_hr">
+                <el-select v-model="formData.endereco.fuso_hr">
                   <el-option
                     v-for="fuso_hr in fuso_hr"
                     :key="fuso_hr.value"
@@ -118,24 +110,6 @@
         </el-col>
       </el-form>
     </el-row>
-    <br>
-    <el-form ref="form" v-model="formData" label-position="top">
-      <el-col :span="24">
-        <el-card class="box-card" align="center">
-          <div slot="header" class="clearfix">
-            <span>Informações complementares</span>
-          </div>
-          <el-form-item>
-            <el-input
-              v-model="formData.description"
-              :rows="8"
-              type="textarea"
-              placeholder="Observações da Empresa"
-            />
-          </el-form-item>
-        </el-card>
-      </el-col>
-    </el-form>
     <el-button v-show="isEdit" type="danger" @click.prevent="showDeleteDialog = true">
       <i class="el-icon-delete"/>
     </el-button>
@@ -144,7 +118,7 @@
     <el-dialog :visible.sync="showDeleteDialog" title="Confirmação" center>
       <span>
         Tem certeza que deseja deletar o Usuário:
-        <b>{{ formData.name }}</b>
+        <b>{{ formData.nome }}</b>
       </span>
       <span slot="footer" class="dialog-footer">
         <el-button type="danger" @click.prevent="showDeleteDialog = false">Cancelar</el-button>
@@ -161,7 +135,7 @@
 <script>
 const defaultForm = {
   id: undefined,
-  name: '',
+  nome: '',
   razao_social: '',
   cnpj: '',
   cnae: '',
@@ -171,6 +145,7 @@ const defaultForm = {
   telefone2: '',
   endereco: {
     logradouro: '',
+    fuso_hr: '',
     cep: '',
     numero: '',
     cidade: '',
@@ -251,9 +226,8 @@ export default {
     },
 
     fillForm() {
-      this.formData = Object.assign({}, this.usuarioFind, this.enderecoFind)
+      this.formData = Object.assign({}, this.empresaFind)
       this.updateNavigationTab()
-      console.log(this.enderecoFind)
     },
 
     handleSave() {
@@ -305,22 +279,23 @@ export default {
     prepareToSave(data) {
       return {
         id: data.id,
-        name: data.name,
+        nome: data.nome,
         razao_social: data.razao_social,
         cnpj: data.cnpj,
         cnae: data.cnae,
         inscricaoestadual: data.inscricaoestadual,
         inscricaomunicipal: data.inscricaomunicipal,
-        telefone: data.telefone,
+        telefone1: data.telefone1,
+        telefone2: data.telefone2,
         endereco: {
-          logradouro: data.logradouro,
-          cep: data.cep,
-          numero: data.numero,
-          cidade: data.cidade,
-          complemento: data.complemento,
-          bairro: data.bairro,
-          uf: data.uf,
-          fuso_hr: data.fuso_hr
+          logradouro: data.endereco.logradouro,
+          cep: data.endereco.cep,
+          numero: data.endereco.numero,
+          cidade: data.endereco.cidade,
+          complemento: data.endereco.complemento,
+          bairro: data.endereco.bairro,
+          uf: data.endereco.uf,
+          fuso_hr: data.endereco.fuso_hr
         }
       }
     },
@@ -330,7 +305,7 @@ export default {
      */
     updateNavigationTab() {
       const route = Object.assign({}, this.tempRoute, {
-        title: `${this.formData.name}`
+        title: `${this.formData.nome}`
       })
       this.$store.dispatch('updateVisitedView', route)
     },
@@ -338,7 +313,7 @@ export default {
     deleteNavigationtab() {
       // deleta a tag de paginas visitadas
       const route = Object.assign({}, this.tempRoute, {
-        title: `${this.formData.name}`
+        title: `${this.formData.nome}`
       })
 
       this.$store.dispatch('delVisitedView', route)

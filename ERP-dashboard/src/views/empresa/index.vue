@@ -6,18 +6,18 @@
     <el-row>
       <el-table
         v-loading="loading"
-        :data="empresas.data ? empresas.data.filter(data => !query.name || data.id.toString().includes(query.name.toLowerCase()) || data.name.toLowerCase().includes(query.name.toLowerCase()) || data.surname.toLowerCase().includes(query.name.toLowerCase()) || data.email.toLowerCase().includes(query.name.toLowerCase()) ) : [] "
+        :data="empresas.data ? empresas.data.filter(data => !query.nome || data.id.toString().includes(query.nome.toLowerCase()) || data.nome.toLowerCase().includes(query.nome.toLowerCase()) || data.nome.toLowerCase().includes(query.nome.toLowerCase()) || data.email.toLowerCase().includes(query.nome.toLowerCase()) ) : [] "
         fit
         empty-text="Nenhum Usuário foi encontrado!"
       >
         <el-table-column label="ID" prop="id" width="60"/>
-        <el-table-column label="Razão Social">
+        <el-table-column label="Nome">
           <template slot-scope="scope">
-            <span>{{ `${scope.row.name} ${scope.row.surname}` }}</span>
+            <span>{{ `${scope.row.nome}` }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="CNPJ" prop="cnpj"/>
-        <el-table-column label="Cadastro" prop="created_at"/>
+        <el-table-column label="cnpj" prop="cnpj"/>
+        <el-table-column label="cnae" prop="cnae"/>
         <el-table-column align="right" width="200">
           <template slot="header" slot-scope="scope">
             <el-input
@@ -31,7 +31,7 @@
             />
           </template>
           <template slot-scope="scope">
-            <el-button size="small" type="primary" @click="handleEdit(scope.row.id + 1)">Editar</el-button>
+            <el-button size="small" type="primary" @click="handleEdit(scope.row.id)">Editar</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -50,7 +50,7 @@ import { mapGetters } from 'vuex'
 import Pagination from '@/components/Pagination'
 
 export default {
-  name: 'EmpresaListing',
+  name: 'EmpresasListing',
 
   components: { Pagination },
 
@@ -116,4 +116,3 @@ export default {
   }
 }
 </script>
-

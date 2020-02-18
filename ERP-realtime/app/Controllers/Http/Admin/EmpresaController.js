@@ -57,6 +57,8 @@ class EmpresaController {
         'razao_social',
         'cnpj',
         'cnae',
+        'telefone1',
+        'telefone2',
         'inscricaoestadual',
         'inscricaomunicipal'
       ])
@@ -112,7 +114,10 @@ class EmpresaController {
       'cnae': empresa.cnae,
       'inscricaoestadual': empresa.inscricaoestadual,
       'inscricaomunicipal': empresa.inscricaomunicipal,
+      'telefone1': empresa.telefone1,
+      'telefone2': empresa.telefone2,
       'endereco': {
+        'fuso_hr': empresa.fuso_hr ,
         'logradouro': empresa.logradouro,
         'cep': empresa.cep,
         'numero': empresa.numero,
@@ -144,12 +149,16 @@ class EmpresaController {
         'razao_social',
         'cnpj',
         'cnae',
+        'telefone1',
+        'telefone2',
         'inscricaoestadual',
         'inscricaomunicipal'
       ])
+
       const enderecoData = request.only([
         'endereco'
       ])
+
       empresa.merge(empresaData)
       await empresa.save(trx)
       if(endereco){
@@ -162,7 +171,7 @@ class EmpresaController {
         endereco = await transform.item(endereco, EnderecoTransformer)
       }
       var empresa = Object.assign(empresa, endereco)
-      empresa = await transform.item(empresa, Transformer)
+      empresa = await transform.item(empresa, EnderecoTransformer)
       trx.commit()
       return response.status(201).send(empresa);
     }catch(erro){
