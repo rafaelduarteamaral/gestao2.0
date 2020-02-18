@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 <template>
   <div class="app-container">
     <el-row :gutter="24">
@@ -13,7 +12,7 @@
                 style="float:right;margin-top:-5px"
                 @click="showSettingsDialog = true"
               >
-                <svg-icon icon-class="reset-pass"/>align="alignment"
+                <svg-icon icon-class="reset-pass"/>
               </el-button>
             </div>
             <el-col :span="5">
@@ -26,27 +25,32 @@
                 <el-input v-mask="'##.##-#-##'" v-model="formData.cnae" type="text"/>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
-              <el-form-item label="Nome/Razão Social:">
+            <el-col :span="7">
+              <el-form-item label="Nome:">
                 <el-input v-model="formData.name" type="text"/>
               </el-form-item>
             </el-col>
-            <el-col :span="5">
+            <el-col :span="7">
+              <el-form-item label="Razão Social:">
+                <el-input v-model="formData.razao_social" type="text"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
               <el-form-item label="Inscrição Estadual">
                 <el-input v-mask="'##########-#'" v-model="formData.inscricaoestadual" type="text"/>
               </el-form-item>
             </el-col>
-            <el-col :span="5">
+            <el-col :span="6">
               <el-form-item label="Inscrição Municipal">
                 <el-input v-mask="'##########-#'" v-model="formData.inscricaomunicipal" type="text"/>
               </el-form-item>
             </el-col>
-            <el-col :span="4">
+            <el-col :span="6">
               <el-form-item label="Telefone 1">
                 <el-input v-mask="'(##)####-####'" v-model="formData.telefone1" type="text"/>
               </el-form-item>
             </el-col>
-            <el-col :span="4">
+            <el-col :span="6">
               <el-form-item label="Telefone 2">
                 <el-input v-mask="'(##)####-####'" v-model="formData.telefone2" type="text"/>
               </el-form-item>
@@ -63,17 +67,29 @@
             <div slot="header">
               <span>Informações de Endereço</span>
             </div>
-            <el-col :span="8">
+            <el-col :span="5">
+              <el-form-item label="Fuso Horário:">
+                <el-select v-model="formData.fuso_hr">
+                  <el-option
+                    v-for="fuso_hr in fuso_hr"
+                    :key="fuso_hr.value"
+                    :label="fuso_hr.label"
+                    :value="fuso_hr.value"
+                  />
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="5">
               <el-form-item label="CEP:">
                 <el-input v-model="formData.endereco.cep" type="text" @keyup.native="searchCep"/>
               </el-form-item>
             </el-col>
-            <el-col :span="13">
+            <el-col :span="10">
               <el-form-item label="Logradouro:">
                 <el-input v-model="formData.endereco.logradouro" type="text" />
               </el-form-item>
             </el-col>
-            <el-col :span="3">
+            <el-col :span="4">
               <el-form-item label="Numero:">
                 <el-input v-model="formData.endereco.numero" type="number" />
               </el-form-item>
@@ -182,14 +198,22 @@ export default {
       showDeleteDialog: false,
       showSettingsDialog: false,
       usuarioFind: '',
-      statuses: [
+      fuso_hr: [
         {
           value: '1',
-          label: 'Pessoa Física'
+          label: '-02:00 (Horário de verão, Fernando de Noronha)'
         },
         {
           value: '2',
-          label: 'Pessoa Jurídica'
+          label: '-03:00 (BRT - Horário de Brasília)'
+        },
+        {
+          value: '3',
+          label: '-04:00 (AMT - Horário da Amazônia)'
+        },
+        {
+          value: '4',
+          label: '-05:00 (ACT - Horário do Acre)'
         }
       ]
     }
@@ -295,7 +319,8 @@ export default {
           cidade: data.cidade,
           complemento: data.complemento,
           bairro: data.bairro,
-          uf: data.uf
+          uf: data.uf,
+          fuso_hr: data.fuso_hr
         }
       }
     },
