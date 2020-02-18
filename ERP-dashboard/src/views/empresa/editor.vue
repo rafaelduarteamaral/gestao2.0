@@ -76,14 +76,14 @@
                 <el-input v-model="formData.endereco.cep" type="text" @keyup.native="searchCep"/>
               </el-form-item>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="9">
               <el-form-item label="Logradouro:">
                 <el-input v-model="formData.endereco.logradouro" type="text" />
               </el-form-item>
             </el-col>
             <el-col :span="4">
               <el-form-item label="Numero:">
-                <el-input v-model="formData.endereco.numero" type="number" />
+                <el-input-number v-model="formData.endereco.numero" type="number" />
               </el-form-item>
             </el-col>
             <el-col :span="5">
