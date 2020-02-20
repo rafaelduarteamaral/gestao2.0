@@ -95,6 +95,26 @@ export default {
       name: 'EditFormaPagamento',
       meta: { title: 'Editar forma Pagamento' },
       hidden: true
+    },
+    {
+      path: 'bancos',
+      component: () => import('@/views/bancos/index'),
+      name: 'bancos',
+      meta: { title: 'Bancos' }
+    },
+    {
+      path: 'banco',
+      component: () => import('@/views/bancos/editor'),
+      name: 'NewBanco',
+      meta: { title: 'Novo Banco' },
+      hidden: true
+    },
+    {
+      path: 'banco/:id',
+      component: () => import('@/views/bancos/editor'),
+      name: 'EditBanco',
+      meta: { title: 'Editar Banco' },
+      hidden: true
     }
   ]
 }

@@ -6,28 +6,65 @@
         <el-col :span="24">
           <el-card class="box-card">
             <div slot="header">
-              <span>Informações da forma de pagamento</span>
+              <span>Informações do Banco</span>
             </div>
-            <el-col :span="8">
-              <el-form-item label="Nome:">
-                <el-input v-model="formData.nome" type="text"/>
+            <el-col :span="5">
+              <el-form-item label="Banco:">
+                <el-select v-model="formData.banco">
+                  <el-option
+                    v-for="banco in banco"
+                    :key="banco.value"
+                    :label="banco.label"
+                    :value="banco.value"
+                  />
+                </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
-              <el-form-item label="Codigo">
-                <el-input v-model="formData.codigo" type="text" />
+            <el-col :span="9">
+              <el-form-item label="Agencia:">
+                <el-input v-mask="'####'" v-model="formData.agencia" type="text"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Conta">
+                <el-input v-mask="'########-#'" v-model="formData.conta" type="text" />
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="Liquidez:">
-                <el-select v-model="formData.liquidez">
+              <el-form-item label="Convenio">
+                <el-input v-model="formData.convenio" type="text" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="5">
+              <el-form-item label="Carteira">
+                <el-input v-model="formData.carteira" type="text" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="5">
+              <el-form-item label="Variação da Carteira">
+                <el-input v-model="formData.variacaocarteira" type="text" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="5">
+              <el-form-item label="Nosso Número">
+                <el-input v-model="formData.nossonumero" type="text" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Formato da Remessa:">
+                <el-select v-model="formData.formatoremessa">
                   <el-option
-                    v-for="liquidez in liquidez"
-                    :key="liquidez.value"
-                    :label="liquidez.label"
-                    :value="liquidez.value"
+                    v-for="formatoremessa in formatoremessa"
+                    :key="formatoremessa.value"
+                    :label="formatoremessa.label"
+                    :value="formatoremessa.value"
                   />
                 </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="5">
+              <el-form-item label="Codigo">
+                <el-input v-model="formData.protesto" type="text" />
               </el-form-item>
             </el-col>
           </el-card>
@@ -65,14 +102,22 @@
 <script>
 const defaultForm = {
   id: undefined,
+  agencia: '',
+  conta: '',
+  convenio: '',
+  carteira: '',
+  variacaocarteira: '',
+  nossonumero: '',
+  formatoremessa: '',
   nome: '',
-  codigo: ''
+  banco: '',
+  protesto: ''
 }
 import { mapGetters } from 'vuex'
 import MediaManager from '@/components/MediaManager'
 
 export default {
-  name: 'UserEditor',
+  name: 'BancoEditor',
 
   components: { MediaManager },
 
@@ -85,14 +130,68 @@ export default {
       showMediaGallery: false,
       showDeleteDialog: false,
       showSettingsDialog: false,
-      liquidez: [
+      formatoremessa: [
         {
-          value: '1',
-          label: 'Sim'
+          value: '240',
+          label: '240'
         },
         {
-          value: '0',
-          label: 'Não'
+          value: '400',
+          label: '400'
+        }
+      ],
+      banco: [
+        {
+          label: 'Banco do Brasil S.A.',
+          value: '001'
+        },
+        {
+          label: 'Banco Itaú S.A.',
+          value: '033'
+        },
+        {
+          label: 'Banco Santander (Brasil) S.A.',
+          value: '356'
+        },
+        {
+          label: 'Banco Real S.A. (antigo)',
+          value: '240'
+        },
+        {
+          label: 'Itaú Unibanco Holding S.A.',
+          value: '652'
+        },
+        {
+          label: 'Banco Bradesco S.A.',
+          value: '237'
+        },
+        {
+          label: 'Banco Citibank S.A.',
+          value: '745'
+        },
+        {
+          label: 'HSBC Bank Brasil S.A. – Banco Múltiplo.',
+          value: '399'
+        },
+        {
+          label: 'Caixa Econômica Federal',
+          value: '104'
+        },
+        {
+          label: 'Banco Mercantil do Brasil S.A.',
+          value: '389'
+        },
+        {
+          label: 'Banco Rural S.A.',
+          value: '453'
+        },
+        {
+          label: 'Banco Safra S.A.',
+          value: '422'
+        },
+        {
+          label: 'Banco Rendimento S.A.',
+          value: '633'
         }
       ]
     }
@@ -100,7 +199,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      formaPagamento: 'currentFormaPagamento'
+      pagBanco: 'currentBanco'
     })
   },
 
@@ -115,29 +214,29 @@ export default {
 
   mounted() {
     if (this.isEdit) {
-      this.findFormaPagamento(this.$route.params.id)
+      this.findBanco(this.$route.params.id)
     }
   },
 
   methods: {
-    findFormaPagamento(id) {
+    findBanco(id) {
       this.loading = true
-      this.$store.dispatch('findFormaPagamento', id).then(() => {
+      this.$store.dispatch('findBanco', id).then(() => {
         this.loading = false
-        this.formaPagamento = this.formaPagamento
+        this.selectBanco = this.pagBanco
         this.fillForm()
       })
     },
 
     fillForm() {
-      this.formData = Object.assign({}, this.formaPagamento)
+      this.formData = Object.assign({}, this.selectBanco)
       this.updateNavigationTab()
     },
 
     handleSave() {
       this.loading = true
       this.$store
-        .dispatch('saveFormaPagamento', this.prepareToSave(this.formData))
+        .dispatch('saveBanco', this.prepareToSave(this.formData))
         .then(() => {
           this.loading = false
           this.$message({
@@ -149,7 +248,7 @@ export default {
           if (!this.isEdit) {
             this.deleteNavigationtab()
             this.$router.push({
-              name: 'EditUser',
+              name: 'EditBanco',
               params: { id: this.formData.id }
             })
           }
@@ -158,7 +257,7 @@ export default {
 
     handleDestroy() {
       this.showDeleteDialog = false
-      this.$store.dispatch('destroyFormaPagamento', this.formData.id).then(() => {
+      this.$store.dispatch('destroyBanco', this.formData.id).then(() => {
         this.$message({
           message: 'Usuário Deletado!',
           type: 'warning',
@@ -180,11 +279,19 @@ export default {
      * Formata os dados que serão enviados para o servidor
      */
     prepareToSave(data) {
+      this.nome = this.banco.find(x => x.value === data.banco)
       return {
         id: data.id,
-        nome: data.nome,
-        codigo: data.codigo,
-        liquidez: data.liquidez
+        nome: this.nome.label,
+        banco: data.banco,
+        agencia: data.agencia,
+        conta: data.conta,
+        convenio: data.convenio,
+        carteira: data.carteira,
+        variacaocarteira: data.variacaocarteira,
+        nossonumero: data.nossonumero,
+        formatoremessa: data.formatoremessa,
+        protesto: data.protesto
       }
     },
 

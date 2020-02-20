@@ -45,6 +45,11 @@ Route.group(() => {
    */
   Route.resource('formasPagamentos', 'FormaPagamentoController').apiOnly()
 
+    /**
+   * Bancos
+   */
+  Route.resource('Bancos', 'BancoController').apiOnly()
+
   /**
    * Order Resource Routes
    */
