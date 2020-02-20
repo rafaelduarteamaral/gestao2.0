@@ -9,12 +9,12 @@
             </div>
             <el-col :span="5">
               <el-form-item label="CNPJ:">
-                <el-input v-mask="['##.###.###/####-##']" v-model="formData.cnpj" type="text" />
+                <el-input v-mask="['##.###.###/####-##']" v-model="formData.cnpj" type="text" placeholder="__.___.___/____-__"/>
               </el-form-item>
             </el-col>
             <el-col :span="5">
               <el-form-item label="CNAE">
-                <el-input v-mask="'##.##-#-##'" v-model="formData.cnae" type="text"/>
+                <el-input v-mask="'##.##-#-##'" v-model="formData.cnae" type="text" placeholder="__.__-_-__"/>
               </el-form-item>
             </el-col>
             <el-col :span="7">
@@ -29,22 +29,22 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="Inscrição Estadual">
-                <el-input v-mask="'##########-#'" v-model="formData.inscricaoestadual" type="text"/>
+                <el-input v-mask="'##########-#'" v-model="formData.inscricaoestadual" type="text" placeholder="__________-_"/>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="Inscrição Municipal">
-                <el-input v-mask="'##########-#'" v-model="formData.inscricaomunicipal" type="text"/>
+                <el-input v-mask="'##########-#'" v-model="formData.inscricaomunicipal" type="text" placeholder="__________-_"/>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="Telefone 1">
-                <el-input v-mask="'(##)####-####'" v-model="formData.telefone1" type="text"/>
+                <el-input v-mask="'(##)####-####'" v-model="formData.telefone1" type="text" placeholder="(__)_____-____"/>
               </el-form-item>
             </el-col>
             <el-col :span="6">
               <el-form-item label="Telefone 2">
-                <el-input v-mask="'(##)####-####'" v-model="formData.telefone2" type="text"/>
+                <el-input v-mask="'(##)####-####'" v-model="formData.telefone2" type="text" placeholder="(__)____-____"/>
               </el-form-item>
             </el-col>
           </el-card>
