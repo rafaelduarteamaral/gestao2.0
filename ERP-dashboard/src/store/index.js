@@ -17,6 +17,8 @@ import users from './modules/users'
 import dashboard from './modules/dashboard'
 import endereco from './modules/endereco'
 import bancos from './modules/bancos'
+import unidades from './modules/unidades'
+import seguimentoNegocios from './modules/seguimentoNegocios'
 
 Vue.use(Vuex)
 
@@ -37,7 +39,9 @@ const store = new Vuex.Store({
     endereco,
     empresas,
     formasPagamentos,
-    bancos
+    bancos,
+    unidades,
+    seguimentoNegocios
   },
   getters
 })

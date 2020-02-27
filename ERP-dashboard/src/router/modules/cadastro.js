@@ -115,6 +115,46 @@ export default {
       name: 'EditBanco',
       meta: { title: 'Editar Banco' },
       hidden: true
+    },
+    {
+      path: 'unidades',
+      component: () => import('@/views/unidades/index'),
+      name: 'unidades',
+      meta: { title: 'Unidade' }
+    },
+    {
+      path: 'unidade',
+      component: () => import('@/views/unidades/editor'),
+      name: 'NewUnidade',
+      meta: { title: 'Nova unidade' },
+      hidden: true
+    },
+    {
+      path: 'unidade/:id',
+      component: () => import('@/views/unidades/editor'),
+      name: 'EditUnidade',
+      meta: { title: 'Editar unidade' },
+      hidden: true
+    },
+    {
+      path: 'seguimentoNegocios',
+      component: () => import('@/views/seguimentoNegocios/index'),
+      name: 'seguimentoNegocios',
+      meta: { title: 'Seguimento Ng' }
+    },
+    {
+      path: 'seguimentoNegocio',
+      component: () => import('@/views/seguimentoNegocios/editor'),
+      name: 'NewSeguimentoNegocio',
+      meta: { title: 'Nova seguimento Ng' },
+      hidden: true
+    },
+    {
+      path: 'seguimentoNegocio/:id',
+      component: () => import('@/views/seguimentoNegocios/editor'),
+      name: 'EditSeguimentoNegocio',
+      meta: { title: 'Editar seguimento Ng' },
+      hidden: true
     }
   ]
 }

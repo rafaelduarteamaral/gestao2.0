@@ -3,7 +3,7 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
-class Banco extends Model {
+class Unidade extends Model {
 }
 
-module.exports = Banco
+module.exports = Unidade

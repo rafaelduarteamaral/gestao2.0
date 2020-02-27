@@ -7,7 +7,7 @@ class BancoSchema extends Schema {
   up () {
     this.create('bancos', (table) => {
       table.increments()
-      table.string('nome', 11)
+      table.string('nome', 150)
       table.string('banco')
       table.string('agencia', 11)
       table.string('conta', 20)
