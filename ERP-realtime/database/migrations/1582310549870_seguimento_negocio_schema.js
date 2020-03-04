@@ -8,6 +8,12 @@ class SeguimentoNegocioSchema extends Schema {
     this.create('seguimento_negocios', (table) => {
       table.increments()
       table.string('nome', 30)
+      table.integer('empresa_id').unsigned()
+      table
+        .foreign('empresa_id')
+        .references('id')
+        .inTable('empresas')
+        .onDelete('cascade')
       table.timestamps()
     })
   }

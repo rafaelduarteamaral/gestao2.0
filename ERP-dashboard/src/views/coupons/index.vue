@@ -320,7 +320,6 @@ export default {
       this.formData = Object.assign({}, this.coupon)
       this.couponCode = this.formData.code
       this.discountType = this.formData.type
-      console.log(this.coupon)
       this.formData.users = this.coupon.users.map(user => user.id)
       this.formData.products = this.coupon.products.map(product => product.id)
       this.clientList.push(...this.coupon.users)

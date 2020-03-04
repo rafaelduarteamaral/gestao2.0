@@ -15,9 +15,12 @@ class BancoController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, pagination, transform }) {
+  async index({ request, response, pagination, transform, auth }) {
     const nome = request.input('agencia')
     const query = Bancos.query()
+    const me = await auth.getUser()
+    query.where('empresa_id', '=', me.empresa_id)
+
     if (nome) {
       query.where('agencia', 'LIKE', `%${nome}%`)
     }
@@ -34,8 +37,9 @@ class BancoController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response, transform }) {
+  async store({ request, response, transform, auth }) {
     try {
+      const me = await auth.getUser()
       const {     
         nome,
         banco,   
@@ -60,6 +64,7 @@ class BancoController {
         nossonumero,
         formatoremessa,
         protesto,
+        empresa_id: me.empresa_id
       })
 
       cadastro_banco = await transform.item(cadastro_banco, Transformer)

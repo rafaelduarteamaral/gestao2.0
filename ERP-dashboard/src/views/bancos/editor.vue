@@ -8,7 +8,7 @@
             <div slot="header">
               <span>Informações do Banco</span>
             </div>
-            <el-col :span="5">
+            <el-col :span="4">
               <el-form-item label="Banco:">
                 <el-select v-model="formData.banco">
                   <el-option
@@ -30,7 +30,7 @@
                 <el-input v-mask="'########-#'" v-model="formData.conta" type="text" />
               </el-form-item>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="7">
               <el-form-item label="Convenio">
                 <el-input v-model="formData.convenio" type="text" />
               </el-form-item>
@@ -52,7 +52,7 @@
             </el-col>
             <el-col :span="4">
               <el-form-item label="Formato da Remessa:">
-                <el-select v-model="formData.formatoremessa">
+                <el-select v-model="formData.formatoremessa" style="width: 100%">
                   <el-option
                     v-for="formatoremessa in formatoremessa"
                     :key="formatoremessa.value"

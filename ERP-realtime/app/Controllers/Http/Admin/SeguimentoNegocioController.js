@@ -15,9 +15,11 @@ class SeguimentoNegocioController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, pagination, transform }) {
+  async index({ request, response, pagination, transform, auth }) {
     const nome = request.input('nome')
     const query = SeguimentoNegocio.query()
+    const me = await auth.getUser()
+    query.where('empresa_id', '=', me.empresa_id)
     if (nome) {
       query.where('nome', 'LIKE', `%${nome}%`)
     }
@@ -34,11 +36,13 @@ class SeguimentoNegocioController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response, transform }) {
+  async store({ request, response, transform, auth }) {
     try {
-      const { nome} = request.all()
+      const { nome } = request.all()
+      const me = await auth.getUser()
       var seguimentoNegocio = await SeguimentoNegocio.create({
-        nome
+        nome,
+        empresa_id: me.empresa_id
       })
       seguimentoNegocio = await transform.item(seguimentoNegocio, Transformer)
       return response.status(201).send(seguimentoNegocio)

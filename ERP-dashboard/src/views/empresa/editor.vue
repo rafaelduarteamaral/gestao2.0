@@ -61,7 +61,7 @@
             </div>
             <el-col :span="5">
               <el-form-item label="Fuso Horário:">
-                <el-select v-model="formData.endereco.fuso_hr">
+                <el-select v-model="formData.endereco.fuso_hr" style="width:100%">
                   <el-option
                     v-for="fuso_hr in fuso_hr"
                     :key="fuso_hr.value"
@@ -71,19 +71,14 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="5">
+            <el-col :span="4">
               <el-form-item label="CEP:">
                 <el-input v-model="formData.endereco.cep" type="text" @keyup.native="searchCep"/>
               </el-form-item>
             </el-col>
-            <el-col :span="9">
+            <el-col :span="5">
               <el-form-item label="Logradouro:">
                 <el-input v-model="formData.endereco.logradouro" type="text" />
-              </el-form-item>
-            </el-col>
-            <el-col :span="4">
-              <el-form-item label="Numero:">
-                <el-input-number v-model="formData.endereco.numero" type="number" />
               </el-form-item>
             </el-col>
             <el-col :span="5">
@@ -91,17 +86,22 @@
                 <el-input v-model="formData.endereco.cidade" type="text" />
               </el-form-item>
             </el-col>
-            <el-col :span="2">
+            <el-col :span="5">
               <el-form-item label="UF:">
                 <el-input v-model="formData.endereco.uf" type="text" />
               </el-form-item>
             </el-col>
-            <el-col :span="9">
+            <el-col :span="8">
               <el-form-item label="Bairro:">
                 <el-input v-model="formData.endereco.bairro" type="text" />
               </el-form-item>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="3">
+              <el-form-item label="Numero:">
+                <el-input-number v-model="formData.endereco.numero" type="number" style="width:100%"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="10">
               <el-form-item label="Complemento:">
                 <el-input v-model="formData.endereco.complemento" type="text" />
               </el-form-item>

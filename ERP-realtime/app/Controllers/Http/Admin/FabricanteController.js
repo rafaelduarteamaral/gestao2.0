@@ -2,13 +2,13 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
-const Unidade = use('App/Models/Unidade')
-const Transformer = use('App/Transformers/Admin/UnidadeTransformer')
+const Fabricante = use('App/Models/Fabricante')
+const Transformer = use('App/Transformers/Admin/FabricanteTransformer')
 
-class UnidadeController {
-  /**
-   * Show a list of all unidade.
-   * GET unidade
+class FabricanteController {
+       /**
+   * Show a list of all fabricante.
+   * GET fabricante
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -17,20 +17,20 @@ class UnidadeController {
    */
   async index({ request, response, pagination, transform, auth }) {
     const nome = request.input('nome')
-    const query = Unidade.query()
+    const query = Fabricante.query()
     const me = await auth.getUser()
     query.where('empresa_id', '=', me.empresa_id)
     if (nome) {
       query.where('nome', 'LIKE', `%${nome}%`)
     }
-    var unidade = await query.paginate(pagination.page, pagination.limit)
-    unidade = await transform.paginate(unidade, Transformer)
-    return response.send(unidade)
+    var fabricante = await query.paginate(pagination.page, pagination.limit)
+    fabricante = await transform.paginate(fabricante, Transformer)
+    return response.send(fabricante)
   }
 
   /**
-   * Create/save a new unidade.
-   * POST unidade
+   * Create/save a new fabricante.
+   * POST fabricante
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -39,24 +39,23 @@ class UnidadeController {
   async store({ request, response, transform, auth }) {
     try {
       const me = await auth.getUser()
-      const { nome, abreviatura} = request.all()
-      var unidade = await Unidade.create({
+      const { nome } = request.all()
+      var fabricante = await Fabricante.create({
         nome,
-        abreviatura,
         empresa_id: me.empresa_id
       })
-      unidade = await transform.item(unidade, Transformer)
-      return response.status(201).send(unidade)
+      fabricante = await transform.item(fabricante, Transformer)
+      return response.status(201).send(fabricante)
     } catch (error) {
       response
         .status(400)
-        .send({ message: 'Não foi possível cria unidade neste momento!' })
+        .send({ message: 'Não foi possível cria o fabricante neste momento!' })
     }
   }
 
   /**
-   * Display a single unidade.
-   * GET unidade/:id
+   * Display a single fabricante.
+   * GET fabricante/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -64,53 +63,53 @@ class UnidadeController {
    * @param {View} ctx.view
    */
   async show({ params: { id }, response, transform }) {
-    var unidade = await Unidade.findOrFail(id)
-    unidade = await transform.item(unidade, Transformer)
-    return response.send(unidade)
+    var fabricante = await Fabricante.findOrFail(id)
+    fabricante = await transform.item(fabricante, Transformer)
+    return response.send(fabricante)
   }
 
   /**
-   * Update unidade details.
-   * PUT or PATCH unidade/:id
+   * Update fabricante details.
+   * PUT or PATCH fabricante/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
   async update({ params: { id }, request, response, transform }) {
-    var unidade = await Unidade.findOrFail(id)
+    var fabricante = await Fabricante.findOrFail(id)
     try {
-      const { nome, abreviatura } = request.all()
-      unidade.merge({ nome, abreviatura })
-      await unidade.save()
-      unidade = await transform.item(unidade, Transformer)
-      return response.send(unidade)
+      const { nome } = request.all()
+      fabricante.merge({ nome })
+      await fabricante.save()
+      fabricante = await transform.item(fabricante, Transformer)
+      return response.send(fabricante)
     } catch (error) {
       return response
         .status(400)
-        .send({ message: 'Não foi possível atualizar a unidade' })
+        .send({ message: 'Não foi possível atualizar o fabricante' })
     }
   }
 
   /**
-   * Delete a unidade with id.
-   * DELETE unidade/:id
+   * Delete a fabricante with id.
+   * DELETE fabricante/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
   async destroy({ params: { id }, request, response }) {
-    const unidade = await Unidade.findOrFail(id)
+    const fabricante = await Fabricante.findOrFail(id)
     try {
-      await unidade.delete()
+      await fabricante.delete()
       return response.status(204).send()
     } catch (error) {
       return response
         .status(500)
-        .send({ message: 'Não foi possível deletar a unidade!' })
+        .send({ message: 'Não foi possível deletar o fabricante' })
     }
   }
 }
 
-module.exports = UnidadeController
+module.exports = FabricanteController

@@ -25,7 +25,8 @@ class BancoTransformer extends TransformerAbstract {
       variacaocarteira: model.variacaocarteira,
       nossonumero: model.nossonumero,
       formatoremessa: model.formatoremessa,
-      protesto: model.protesto 
+      protesto: model.protesto,
+      empresa_id: model.empresa_id
     }
   }
 }

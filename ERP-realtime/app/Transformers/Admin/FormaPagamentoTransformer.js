@@ -18,7 +18,8 @@ class FormaPagamentoTransformer extends TransformerAbstract {
      id: model.id,
      nome: model.nome,
      codigo: model.codigo,
-     liquidez: model.liquidez 
+     liquidez: model.liquidez ,
+     empresa_id: model.empresa_id
     }
   }
 }

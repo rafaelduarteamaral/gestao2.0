@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 <template>
   <div class="app-container">
     <el-row :gutter="24">
@@ -6,7 +5,7 @@
         <el-col :span="24">
           <el-card class="box-card">
             <div slot="header">
-              <span>Informações do seguimento de negocio</span>
+              <span>Informações do Fabricante</span>
             </div>
             <el-col :span="24">
               <el-form-item label="Nome:">
@@ -54,7 +53,7 @@ import { mapGetters } from 'vuex'
 import MediaManager from '@/components/MediaManager'
 
 export default {
-  name: 'SeguimentoNegocioEditor',
+  name: 'FabricanteEditor',
 
   components: { MediaManager },
 
@@ -72,7 +71,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      pagSeguimentoNegocio: 'currentSeguimentoNegocio'
+      pagFabricante: 'currentFabricante'
     })
   },
 
@@ -87,29 +86,29 @@ export default {
 
   mounted() {
     if (this.isEdit) {
-      this.findSeguimentoNegocio(this.$route.params.id)
+      this.findFabricante(this.$route.params.id)
     }
   },
 
   methods: {
-    findSeguimentoNegocio(id) {
+    findFabricante(id) {
       this.loading = true
-      this.$store.dispatch('findSeguimentoNegocio', id).then(() => {
+      this.$store.dispatch('findFabricante', id).then(() => {
         this.loading = false
-        this.selectSeguimentoNegocio = this.pagSeguimentoNegocio
+        this.selectFabricante = this.pagFabricante
         this.fillForm()
       })
     },
 
     fillForm() {
-      this.formData = Object.assign({}, this.selectSeguimentoNegocio)
+      this.formData = Object.assign({}, this.selectFabricante)
       this.updateNavigationTab()
     },
 
     handleSave() {
       this.loading = true
       this.$store
-        .dispatch('saveSeguimentoNegocio', this.prepareToSave(this.formData))
+        .dispatch('saveFabricante', this.prepareToSave(this.formData))
         .then(() => {
           this.loading = false
           this.$message({
@@ -121,7 +120,7 @@ export default {
           if (!this.isEdit) {
             this.deleteNavigationtab()
             this.$router.push({
-              name: 'EditSeguimentoNegocio',
+              name: 'EditFabricante',
               params: { id: this.formData.id }
             })
           }
@@ -130,9 +129,9 @@ export default {
 
     handleDestroy() {
       this.showDeleteDialog = false
-      this.$store.dispatch('destroySeguimentoNegocio', this.formData.id).then(() => {
+      this.$store.dispatch('destroyFabricante', this.formData.id).then(() => {
         this.$message({
-          message: 'SeguimentoNegocio Deletado!',
+          message: 'Fabricante Deletado!',
           type: 'warning',
           showClose: true,
           duration: 1000
@@ -152,7 +151,6 @@ export default {
      * Formata os dados que serão enviados para o servidor
      */
     prepareToSave(data) {
-      console.log(data)
       return {
         id: data.id,
         nome: data.nome

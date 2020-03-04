@@ -18,9 +18,12 @@ class ProductController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, pagination, transform }) {
+  async index({ request, response, pagination, transform, auth }) {
     const name = request.input('name')
     const query = Product.query()
+    const me = await auth.getUser()
+    query.where('empresa_id', '=', me.empresa_id)
+
     if (name) {
       query.where('name', 'LIKE', `%${name}%`)
     }
@@ -37,20 +40,85 @@ class ProductController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response, transform }) {
+  async store({ request, response, transform, auth }) {
     try {
-      const { name, description, price, image_id, titulo, category_id, ncm, tipo, estoqueMinimo, custoCompras } = request.all()
-      var product = await Product.create({
-        name,
-        description,
-        price,
-        image_id,
-        titulo,
-        category_id,
+      const me = await auth.getUser()
+      const { 
+        name, 
+        description, 
+        image_id, 
+        titulo, 
+        category_id, 
         ncm,
-        tipo,
+        codigoBarras,
+        listaServico, 
+        tipo, 
+        custoCompras,
+        marca,
+        endereco,
+        material,
+        operacaoEntrada,
+        operacaoSaida,
+        nSerie,
+        familia,
+        grupo,
+        subgrupo,
+        margemValorAgregado,
+        saldoEstoque,
+        valorEstoque,
         estoqueMinimo,
-        custoCompras
+        precoComissao,
+        custoCompra,
+        icmsCompra,
+        ipiCompra,
+        custoFrete,
+        precoFob,
+        markup,
+        precoVenda,
+        icmsMedioVd,
+        ipiVenda,
+        mediaDescontos,
+        acrescimos,
+        margemLucro,
+      } = request.all()
+      var product = await Product.create({
+        name, 
+        description, 
+        image_id, 
+        titulo, 
+        category_id, 
+        ncm,
+        codigoBarras,
+        listaServico,
+        tipo, 
+        custoCompras,
+        marca,
+        endereco,
+        material,
+        operacaoEntrada,
+        operacaoSaida,
+        nSerie,
+        familia,
+        grupo,
+        subgrupo,
+        margemValorAgregado,
+        saldoEstoque,
+        valorEstoque,
+        estoqueMinimo,
+        precoComissao,
+        custoCompra,
+        icmsCompra,
+        ipiCompra,
+        custoFrete,
+        precoFob,
+        markup,
+        precoVenda,
+        icmsMedioVd,
+        ipiVenda,
+        mediaDescontos,
+        acrescimos,
+        margemLucro,
+        empresa_id: me.empresa_id
       })
       product = await transform.item(product, Transformer)
       return response.status(201).send(product)
@@ -87,8 +155,82 @@ class ProductController {
   async update({ params: { id }, request, response, transform }) {
     var product = await Product.findOrFail(id)
     try {
-      const { name, description, price, image_id, titulo, category_id, ncm, tipo, estoqueMinimo, custoCompras } = request.all()
-      product.merge({ name, description, price, image_id, titulo, category_id, ncm, tipo, estoqueMinimo, custoCompras })
+      const { 
+        name, 
+        description, 
+        image_id, 
+        titulo, 
+        category_id, 
+        tipo, 
+        custoCompras,
+        ncm,
+        codigoBarras,
+        listaServico, 
+        marca,
+        endereco,
+        material,
+        operacaoEntrada,
+        operacaoSaida,
+        nSerie,
+        familia,
+        grupo,
+        subgrupo,
+        margemValorAgregado,
+        saldoEstoque,
+        valorEstoque,
+        estoqueMinimo,
+        precoComissao,
+        custoCompra,
+        icmsCompra,
+        ipiCompra,
+        custoFrete,
+        precoFob,
+        markup,
+        precoVenda,
+        icmsMedioVd,
+        ipiVenda,
+        mediaDescontos,
+        acrescimos,
+        margemLucro,
+       } = request.all()
+      product.merge({
+        name, 
+        description, 
+        image_id, 
+        titulo, 
+        category_id, 
+        tipo, 
+        custoCompras,
+        ncm,
+        codigoBarras,
+        listaServico,
+        marca,
+        endereco,
+        material,
+        operacaoEntrada,
+        operacaoSaida,
+        nSerie,
+        familia,
+        grupo,
+        subgrupo,
+        margemValorAgregado,
+        saldoEstoque,
+        valorEstoque,
+        estoqueMinimo,
+        precoComissao,
+        custoCompra,
+        icmsCompra,
+        ipiCompra,
+        custoFrete,
+        precoFob,
+        markup,
+        precoVenda,
+        icmsMedioVd,
+        ipiVenda,
+        mediaDescontos,
+        acrescimos,
+        margemLucro,
+       })
       await product.save()
       product = await transform.item(product, Transformer)
       return response.send(product)

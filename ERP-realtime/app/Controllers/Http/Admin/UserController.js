@@ -21,17 +21,27 @@ class UserController {
    * @param {Response} ctx.response
    * @param {object} ctx.pagination
    */
-  async index({ request, response, pagination, transform }) {
+  async index({ request, response, pagination, transform, auth }) {
     const name = request.input('name')
     const query = User.query()
+    const me = await auth.getUser()
     query.leftJoin('enderecos', 'users.id', 'enderecos.user_id')
-
+    query.where('empresa_id', '=', me.empresa_id)
+  
     if (name) {
       query.where('name', 'LIKE', `%${name}%`)
       query.orWhere('surname', 'LIKE', `%${name}%`)
       query.orWhere('email', 'LIKE', `%${name}%`)
     }
 
+    query.select('users.*')
+    query.select('enderecos.logradouro')
+    query.select('enderecos.cep')
+    query.select('enderecos.numero')
+    query.select('enderecos.complemento')
+    query.select('enderecos.bairro')
+    query.select('enderecos.uf')
+    query.select('enderecos.user_id')
 
     var users = await query.paginate(pagination.page, pagination.limit)
     users = await transform.paginate(users, Transformer)
@@ -47,9 +57,10 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response, transform }) {
+  async store({ request, response, transform, auth }) {
     const trx = await Database.beginTransaction()
     try {
+      const me = await auth.getUser()
       const userData = request.only([
         'name',
         'tipo',
@@ -63,7 +74,8 @@ class UserController {
         'cnae',
         'dt_nascimento',
         'cpf_cnpj',
-        'descricao'
+        'descricao',
+        'empresa_id'
       ])
 
       const enderecoData = request.only([
@@ -75,7 +87,7 @@ class UserController {
       user = await transform.item(user, Transformer)
 
       // Cadastrando endereço
-      var endereco = await Endereco.create({'user_id': user.id ,...enderecoData.endereco}, trx)
+      var endereco = await Endereco.create({'user_id': user.id,...enderecoData.endereco}, trx)
       endereco = await transform.item(endereco, EnderecoTransformer)
 
       // Preparando o retorno do usuário e endereco

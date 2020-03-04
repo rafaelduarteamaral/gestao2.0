@@ -29,14 +29,6 @@
                 :title=" formData.image ? formData.image.original_name : 'Clique para escolher uma imagem'"
               >
             </div>
-            <el-form-item label="Preço de venda">
-              <el-input-number
-                v-model="formData.price"
-                :precision="2"
-                :controls="false"
-                style="width:100%"
-              />
-            </el-form-item>
             <el-row>
               <el-button v-show="isEdit" type="danger" @click.prevent="showDeleteDialog = true">
                 <i class="el-icon-delete"/>
@@ -48,33 +40,158 @@
         <el-col :span="24" style="margin-top:20px">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
-              <span>{{ formData.name ? formData.name : 'Novo Produto' }}</span>
+              <span>Cabeçalho</span>
             </div>
-            <el-col :span="5">
-              <el-form-item label="Categorias">
-                <el-select v-model="formData.category_id" :remote-method="searchCategories" :loading="searching" placeholder="Buscar Categorias" filterable remote style="width:100%">
-                  <el-option v-for="(item, index) in categoriesList" :key="index" :label="categoriesLabel(item)" :value="item.id"/>
-                </el-select>
+            <el-col :span="4">
+              <el-form-item label="Codigo de barras">
+                <el-input v-model="formData.codigoBarras" placeholder="Codigo de barras"/>
               </el-form-item>
             </el-col>
-            <el-col :span="5">
+            <el-col :span="4">
+              <el-form-item label="Lista serviço">
+                <el-input v-model="formData.listaServico" placeholder="Lista de servico"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
               <el-form-item label="NCM">
                 <el-input v-model="formData.ncm" placeholder="NCM"/>
               </el-form-item>
             </el-col>
+            <el-col :span="4">
+              <el-form-item label="Marca">
+                <el-input v-model="formData.marca" placeholder="marca"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Endereco">
+                <el-input v-model="formData.endereco" placeholder="Endereco"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Material">
+                <el-input v-model="formData.material" placeholder="Material"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Operação entrada">
+                <el-input v-model="formData.operacaoEntrada" placeholder="Operação entrada"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Operação saída">
+                <el-input v-model="formData.operacaoSaida" placeholder="Operação saída"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Nº série">
+                <el-input v-model="formData.nSerie" placeholder="Nº série"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Família">
+                <el-input v-model="formData.familia" placeholder="Família"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Grupo">
+                <el-input v-model="formData.grupo" placeholder="Grupo"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Subgrupo">
+                <el-input v-model="formData.subgrupo" placeholder="Subgrupo"/>
+              </el-form-item>
+            </el-col>
+          </el-card>
+        </el-col>
+        <el-col :span="24" style="margin-top:20px">
+          <el-card class="box-card">
+            <div slot="header" class="clearfix">
+              <span>Formação de preço</span>
+            </div>
             <el-col :span="5">
-              <el-form-item label="Tipo">
-                <el-input v-model="formData.tipo" placeholder="Tipo"/>
+              <el-form-item label="% Margem valor agregado ">
+                <el-input-number v-model="formData.margemValorAgregado" :precision="2" :controls="false" style="width:100%"/>
               </el-form-item>
             </el-col>
             <el-col :span="5">
-              <el-form-item label="Estoque mínimo">
-                <el-input-number v-model="formData.estoqueMinimo" placeholder="Estoque mínimo"/>
+              <el-form-item label="Saldo estoque">
+                <el-input-number v-model="formData.saldoEstoque" :controls="true" style="width:100%"/>
               </el-form-item>
             </el-col>
             <el-col :span="5">
-              <el-form-item label="Custo de compra">
-                <el-input-number v-model="formData.custoCompras" :precision="2" :controls="false" style="width:100%"/>
+              <el-form-item label="Valor estoque">
+                <el-input-number v-model="formData.valorEstoque" :precision="2" :controls="false" style="width:100%"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="5">
+              <el-form-item label="Estoque mínimo*">
+                <el-input-number v-model="formData.estoqueMinimo" :controls="true" style="width:100%"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Perc. comissão">
+                <el-input-number v-model="formData.precoComissao" :precision="2" :controls="false" style="width:100%"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Custo compra">
+                <el-input-number v-model="formData.custoCompra" :precision="2" :controls="false" style="width:100%" @change="calculoFinal"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="ICMS compra">
+                <el-input-number v-model="formData.icmsCompra" :precision="2" :controls="false" style="width:100%" @change="calculoFinal"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="IPI compra">
+                <el-input-number v-model="formData.ipiCompra" :precision="2" :controls="false" style="width:100%" @change="calculoFinal"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Custo frete">
+                <el-input-number v-model="formData.custoFrete" :precision="2" :controls="false" style="width:100%" @change="calculoFinal"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Preço FOB">
+                <el-input-number v-model="formData.precoFob" :precision="2" :controls="false" style="width:100%" @change="calculoFinal"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Markup">
+                <el-input-number v-model="formData.markup" :precision="2" :controls="false" style="width:100%" @change="calculoFinal"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Preço venda">
+                <el-input-number v-model="formData.precoVenda" :precision="2" :controls="false" style="width:100%" @change="calculoFinal"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="ICMS médio vd.">
+                <el-input-number v-model="formData.icmsMedioVd" :precision="2" :controls="false" style="width:100%" @change="calculoFinal"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="% IPI venda ">
+                <el-input-number v-model="formData.ipiVenda" :precision="2" :controls="false" style="width:100%" @change="calculoFinal"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Média descontos">
+                <el-input-number v-model="formData.mediaDescontos" :precision="2" :controls="false" style="width:100%" @change="calculoFinal"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="Acréscimos">
+                <el-input-number v-model="formData.acrescimos" :precision="2" :controls="false" style="width:100%" @change="calculoFinal"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4">
+              <el-form-item label="% Margem lucro">
+                <el-input-number v-model="formData.margemLucro" :precision="2" :controls="false" style="width:100%" @change="calculoFinal"/>
               </el-form-item>
             </el-col>
           </el-card>
@@ -107,13 +224,35 @@ const defaultForm = {
   name: '',
   description: '',
   image_id: undefined,
-  price: undefined,
-  titulo: '',
-  category_id: '',
+  codigoBarras: '',
+  listaServico: '',
   ncm: '',
-  tipo: '',
+  marca: '',
+  endereco: '',
+  material: '',
+  operacaoEntrada: '',
+  operacaoSaida: '',
+  nSerie: '',
+  familia: '',
+  grupo: '',
+  subgrupo: '',
+  margemValorAgregado: '',
+  saldoEstoque: '',
+  valorEstoque: '',
   estoqueMinimo: '',
-  custoCompras: ''
+  precoComissao: '',
+  custoCompra: '',
+  icmsCompra: '',
+  ipiCompra: '',
+  custoFrete: '',
+  precoFob: '',
+  markup: '',
+  precoVenda: '',
+  icmsMedioVd: '',
+  ipiVenda: '',
+  mediaDescontos: '',
+  acrescimos: '',
+  margemLucro: ''
 }
 export default {
   name: 'ProductEditor',
@@ -124,6 +263,7 @@ export default {
     return {
       isEdit: false,
       loading: false,
+      lucro: 0,
       categoriesList: [],
       searching: false,
       showMediaManager: false,
@@ -240,6 +380,13 @@ export default {
     changeImage(image) {
       this.formData.image_id = image.id
       this.formData.image = image
+    },
+
+    calculoFinal() {
+      this.formData.precoFob = this.formData.custoCompra - this.formData.icmsCompra - this.formData.ipiCompra + this.formData.custoFrete
+      this.formData.precoVenda = this.formData.precoFob + this.formData.markup
+      this.lucro = this.formData.precoVenda - this.formData.custoCompra
+      this.formData.margemLucro = (((this.lucro / this.formData.precoFob)) * 100) - this.formData.icmsMedioVd - this.formData.mediaDescontos - this.formData.acrescimos
     }
   }
 }

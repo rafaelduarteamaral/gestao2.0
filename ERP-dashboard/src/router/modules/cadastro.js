@@ -80,7 +80,7 @@ export default {
       path: 'formasPagamentos',
       component: () => import('@/views/formaPagamento/index'),
       name: 'formasPagamentos',
-      meta: { title: 'Formas Pgto' }
+      meta: { title: 'Formas Pagamento' }
     },
     {
       path: 'formaPagamento',
@@ -140,20 +140,40 @@ export default {
       path: 'seguimentoNegocios',
       component: () => import('@/views/seguimentoNegocios/index'),
       name: 'seguimentoNegocios',
-      meta: { title: 'Seguimento Ng' }
+      meta: { title: 'Sg. Negócio' }
     },
     {
       path: 'seguimentoNegocio',
       component: () => import('@/views/seguimentoNegocios/editor'),
       name: 'NewSeguimentoNegocio',
-      meta: { title: 'Nova seguimento Ng' },
+      meta: { title: 'Nova Sg. Negócio' },
       hidden: true
     },
     {
       path: 'seguimentoNegocio/:id',
       component: () => import('@/views/seguimentoNegocios/editor'),
       name: 'EditSeguimentoNegocio',
-      meta: { title: 'Editar seguimento Ng' },
+      meta: { title: 'Editar Sg. Negócio' },
+      hidden: true
+    },
+    {
+      path: 'fabricantes',
+      component: () => import('@/views/fabricantes/index'),
+      name: 'fabricantes',
+      meta: { title: 'Fabricante' }
+    },
+    {
+      path: 'fabricante',
+      component: () => import('@/views/fabricantes/editor'),
+      name: 'NewFabricante',
+      meta: { title: 'Novo Fabricante' },
+      hidden: true
+    },
+    {
+      path: 'fabricante/:id',
+      component: () => import('@/views/fabricantes/editor'),
+      name: 'EditFabricante',
+      meta: { title: 'Editar Fabricante' },
       hidden: true
     }
   ]

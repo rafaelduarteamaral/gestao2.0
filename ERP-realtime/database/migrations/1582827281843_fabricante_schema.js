@@ -3,13 +3,11 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 
-class FormaPagamentoSchema extends Schema {
+class FabricanteSchema extends Schema {
   up () {
-    this.create('forma_pagamentos', (table) => {
+    this.create('fabricantes', (table) => {
       table.increments()
-      table.string('nome', 30)
-      table.string('codigo', 20)
-      table.string('liquidez', 1)
+      table.string('nome', 50)
       table.integer('empresa_id').unsigned()
       table
         .foreign('empresa_id')
@@ -21,8 +19,8 @@ class FormaPagamentoSchema extends Schema {
   }
 
   down () {
-    this.drop('forma_pagamentos')
+    this.drop('fabricantes')
   }
 }
 
-module.exports = FormaPagamentoSchema
+module.exports = FabricanteSchema

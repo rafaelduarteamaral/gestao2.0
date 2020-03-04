@@ -17,7 +17,8 @@ class UnidadeTransformer extends TransformerAbstract {
      // add your transformation object here
      id: model.id,
      nome: model.nome,
-     abreviatura: model.abreviatura
+     abreviatura: model.abreviatura,
+     empresa_id: model.empresa_id
     }
   }
 }

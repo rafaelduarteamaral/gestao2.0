@@ -24,12 +24,12 @@ class EmpresaController {
    * @param {View} ctx.view
    */
   async index({ request, response, pagination, transform }) {
-    const name = request.input('name')
+    const nome = request.input('nome')
     const query = Empresa.query()
     query.leftJoin('endereco_empresas', 'empresas.id', 'endereco_empresas.empresa_id')
 
-    if (name) {
-      query.where('nome', 'LIKE', `%${name}%`)
+    if (nome) {
+      query.where('nome', 'LIKE', `%${nome}%`)
     }
 
 

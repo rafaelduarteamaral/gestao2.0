@@ -9,7 +9,7 @@ class EmpresaSchema extends Schema {
       table.increments()
       table.string('nome', 50)
       table.string('razao_social', 100)
-      table.string('cnpj', 15)
+      table.string('cnpj', 30)
       table.string('cnae', 50)
       table.string('telefone1', 19)
       table.string('telefone2', 19)

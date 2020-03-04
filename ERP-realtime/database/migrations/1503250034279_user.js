@@ -24,6 +24,12 @@ class UserSchema extends Schema {
       table.string('rg', 20)
       table.string('telefone1', 20)
       table.string('telefone2', 20)
+      table.integer('empresa_id').unsigned()
+      table
+        .foreign('empresa_id')
+        .references('id')
+        .inTable('empresas')
+        .onDelete('cascade')
     })
   }
 

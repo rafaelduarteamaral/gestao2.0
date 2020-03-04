@@ -21,6 +21,10 @@ class User extends Model {
     })
   }
 
+  static get dates() {
+    return ['dt_nascimento']
+  }
+
   /**
    * Oculta os campos definidos no retorno, das queries no DB
    */

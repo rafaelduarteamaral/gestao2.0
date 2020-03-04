@@ -1,14 +1,14 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button type="primary" @click="handleCreate">Novo seguimento de negocio</el-button>
+      <el-button type="primary" @click="handleCreate">Novo fabricante</el-button>
     </div>
     <el-row>
       <el-table
         v-loading="loading"
-        :data="seguimentoNegocios.data ? seguimentoNegocios.data.filter(data => !query.nome || data.id.toString().includes(query.nome.toLowerCase()) || data.nome.toLowerCase().includes(query.nome.toLowerCase()) || data.conta.toLowerCase().includes(query.nome.toLowerCase()) || data.agencia.toLowerCase().includes(query.nome.toLowerCase()) ) : [] "
+        :data="fabricantes.data ? fabricantes.data.filter(data => !query.nome || data.id.toString().includes(query.nome.toLowerCase()) || data.nome.toLowerCase().includes(query.nome.toLowerCase()) || data.conta.toLowerCase().includes(query.nome.toLowerCase()) || data.agencia.toLowerCase().includes(query.nome.toLowerCase()) ) : [] "
         fit
-        empty-text="Nenhuma unidade foi encontrada"
+        empty-text="Nenhum fabricante encontrado"
       >
         <el-table-column label="ID" prop="id" width="60"/>
         <el-table-column label="Nome">
@@ -34,8 +34,8 @@
         </el-table-column>
       </el-table>
       <pagination
-        v-show="seguimentoNegocios.pagination.total && seguimentoNegocios.pagination.total > 0"
-        :total="seguimentoNegocios.pagination.total ? seguimentoNegocios.pagination.total : 0"
+        v-show="fabricantes.pagination.total && fabricantes.pagination.total > 0"
+        :total="fabricantes.pagination.total ? fabricantes.pagination.total : 0"
         :page.sync="query.page"
         :limit.sync="query.limit"
         @pagination="fetch"
@@ -48,7 +48,7 @@ import { mapGetters } from 'vuex'
 import Pagination from '@/components/Pagination'
 
 export default {
-  name: 'SeguimentoNegocioListing',
+  name: 'FabricanteListing',
 
   components: { Pagination },
 
@@ -65,7 +65,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      seguimentoNegocios: 'seguimentoNegocios'
+      fabricantes: 'fabricantes'
     })
   },
 
@@ -83,17 +83,17 @@ export default {
     fetch() {
       this.loading = true
       this.updateQueryParameters()
-      this.$store.dispatch('fetchSeguimentoNegocios', this.query).then(() => {
+      this.$store.dispatch('fetchFabricantes', this.query).then(() => {
         this.loading = false
       })
     },
 
     handleCreate() {
-      this.$router.push({ name: 'NewSeguimentoNegocio' })
+      this.$router.push({ name: 'NewFabricante' })
     },
 
     handleEdit(id) {
-      this.$router.push({ name: 'EditSeguimentoNegocio', params: { id }})
+      this.$router.push({ name: 'EditFabricante', params: { id }})
     },
 
     handleClearSearch() {

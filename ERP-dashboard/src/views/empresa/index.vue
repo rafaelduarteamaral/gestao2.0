@@ -31,7 +31,7 @@
             />
           </template>
           <template slot-scope="scope">
-            <el-button size="small" type="primary" @click="handleEdit(scope.row.id)">Editar</el-button>
+            <el-button size="small" type="primary" @click="handleEdit(scope.row.id == 0 ? scope.row.id + 1 : scope.row.id)">Editar</el-button>
           </template>
         </el-table-column>
       </el-table>

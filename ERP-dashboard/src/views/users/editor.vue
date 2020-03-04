@@ -17,7 +17,7 @@
               </el-button>
             </div>
             <el-col :span="6">
-              <el-form-item label="Tipo:"><br>
+              <el-form-item label="Tipo:" style="width:100%"><br>
                 <el-select v-model="formData.tipo">
                   <el-option
                     v-for="tipo in tipo"
@@ -28,7 +28,27 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="7">
+            <el-col :span="6">
+              <el-form-item label="Empresa">
+                <el-select
+                  v-model="formData.empresa"
+                  :remote-method="searchEmpresa"
+                  :loading="searching"
+                  placeholder="Busacar Empresa"
+                  filterable
+                  remote
+                  style="width:100%"
+                >
+                  <el-option
+                    v-for="(item, index) in empresaList"
+                    :key="index"
+                    :label="empresaLabel(item)"
+                    :value="item.id"
+                  />
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
               <el-form-item label="CPF/CNPJ:">
                 <el-input v-mask="['###.###.###-##', '##.###.###/####-##']" v-model="formData.cpf_cnpj" type="text"/>
               </el-form-item>
@@ -38,22 +58,22 @@
                 <el-input v-mask="'##.##-#-##'" v-model="formData.cnae" type="text" placeholder="Em caso de PJ"/>
               </el-form-item>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="12">
               <el-form-item label="Nome/Razão Social:">
                 <el-input v-model="formData.name" type="text"/>
               </el-form-item>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="12">
               <el-form-item label="Sobrenome:">
                 <el-input v-model="formData.surname" type="text"/>
               </el-form-item>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="12">
               <el-form-item label="RG/Inscrição">
                 <el-input v-model="formData.rg" type="text"/>
               </el-form-item>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="12">
               <el-form-item label="Data de Nascimento:">
                 <el-date-picker
                   v-model="formData.dt_nascimento"
@@ -64,22 +84,22 @@
                 />
               </el-form-item>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="12">
               <el-form-item label="Telefone 1:">
                 <el-input v-mask="'(##)#####-####'" v-model="formData.telefone1" type="text" placeholder="(00)00000-0000"/>
               </el-form-item>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="12">
               <el-form-item label="Telefone 2:">
                 <el-input v-mask="'(##)####-####'" v-model="formData.telefone2" type="text" placeholder="(00)0000-0000"/>
               </el-form-item>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="12">
               <el-form-item label="E-mail:">
                 <el-input v-model="formData.email" type="text"/>
               </el-form-item>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="12">
               <el-form-item v-if="!isEdit" label="Senha:">
                 <el-input v-model="formData.password" type="password"/>
               </el-form-item>
@@ -121,9 +141,9 @@
                 <el-input v-model="formData.endereco.logradouro" type="text" />
               </el-form-item>
             </el-col>
-            <el-col :span="3">
+            <el-col :span="5">
               <el-form-item label="Numero:">
-                <el-input-number v-model="formData.endereco.numero" type="number" />
+                <el-input-number v-model="formData.endereco.numero" type="number" style="width: 100%"/>
               </el-form-item>
             </el-col>
             <el-col :span="5">
@@ -212,6 +232,7 @@ const defaultForm = {
   image_id: undefined,
   password: '',
   descricao: '',
+  empresa: '',
   endereco: {
     cep: '',
     uf: '',
@@ -236,11 +257,13 @@ export default {
       loading: false,
       tempRoute: '',
       isEdit: false,
+      searching: false,
       formData: Object.assign({}, defaultForm),
       showMediaGallery: false,
       showDeleteDialog: false,
       showSettingsDialog: false,
       usuarioFind: '',
+      empresaList: [],
       tipo: [
         {
           value: '1',
@@ -256,7 +279,8 @@ export default {
 
   computed: {
     ...mapGetters({
-      user: 'currentUser'
+      user: 'currentUser',
+      empresas: 'empresas'
     })
   },
 
@@ -290,8 +314,30 @@ export default {
       this.updateNavigationTab()
     },
 
+    searchEmpresa(nome) {
+      this.searching = true
+      this.empresaList = []
+      this.$store.dispatch('fetchEmpresas', { nome }).then(() => {
+        this.searching = false
+        this.empresaList.push(...this.empresas.data)
+      })
+    },
+
+    empresaLabel(empresa) {
+      return empresa && empresa.nome ? `${empresa.nome}` : ''
+    },
+
     handleSave() {
       this.loading = true
+      if (!this.formData.endereco.cep) {
+        this.$message({
+          message: 'CEP obrigatorio!',
+          type: 'error',
+          showClose: true,
+          duration: 1000
+        })
+        return
+      }
       this.$store
         .dispatch('saveUser', this.prepareToSave(this.formData))
         .then(() => {
@@ -345,12 +391,13 @@ export default {
         email: data.email,
         cpf_cnpj: data.cpf_cnpj,
         cnae: data.cnae,
-        dt_nascimento: data.dt_nascimento,
+        dt_nascimento: Date.parse(data.dt_nascimento),
         descricao: data.descricao,
         rg: data.rg,
         image_id: data.image_id,
         password: data.password ? data.password : undefined,
         tipo: data.tipo,
+        empresa_id: data.empresa,
         endereco: {
           cep: data.endereco.cep,
           cidade: data.endereco.cidade,

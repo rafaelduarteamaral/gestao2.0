@@ -15,6 +15,8 @@ Route.group(() => {
         [['categories.update'], ['Admin/StoreCategory']]
       ])
     )
+  Route.get('categoriesFamilia/:id/:familiaId', 'CategoryController.showFamilia')
+
   /**
    * Products resource routes
    */
@@ -49,6 +51,11 @@ Route.group(() => {
    * Seguimento de negocios
    */
   Route.resource('seguimentoNegocios', 'SeguimentoNegocioController').apiOnly()
+
+  /**
+   * Fabricantes
+   */
+  Route.resource('fabricantes', 'FabricanteController').apiOnly()
 
     /**
    * Bancos

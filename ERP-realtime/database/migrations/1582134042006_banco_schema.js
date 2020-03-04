@@ -17,6 +17,12 @@ class BancoSchema extends Schema {
       table.string('nossonumero', 20)
       table.string('formatoremessa', 20)
       table.string('protesto', 20)
+      table.integer('empresa_id').unsigned()
+      table
+        .foreign('empresa_id')
+        .references('id')
+        .inTable('empresas')
+        .onDelete('cascade')
       table.timestamps()
     })
   }

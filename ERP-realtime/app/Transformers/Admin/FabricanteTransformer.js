@@ -3,12 +3,12 @@
 const TransformerAbstract = use('Adonis/Addons/Bumblebee/TransformerAbstract')
 
 /**
- * SeguimentoNegocioTransformer class
+ * FabricanteTransformer class
  *
- * @class SeguimentoNegocioTransformer
+ * @class FabricanteTransformer
  * @constructor
  */
-class SeguimentoNegocioTransformer extends TransformerAbstract {
+class FabricanteTransformer extends TransformerAbstract {
   /**
    * This method is used to transform the data.
    */
@@ -22,4 +22,4 @@ class SeguimentoNegocioTransformer extends TransformerAbstract {
   }
 }
 
-module.exports = SeguimentoNegocioTransformer
+module.exports = FabricanteTransformer

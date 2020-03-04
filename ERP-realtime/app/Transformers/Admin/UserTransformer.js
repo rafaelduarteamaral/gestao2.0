@@ -29,6 +29,7 @@ class UserTransformer extends TransformerAbstract {
       telefone1: model.telefone1,
       telefone2: model.telefone2,
       descricao: model.descricao,
+      empresa_id: model.empresa_id,
       endereco: {
         logradouro: model.logradouro,
         cep: model.cep,
