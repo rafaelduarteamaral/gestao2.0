@@ -15,6 +15,13 @@ export function find(id) {
   })
 }
 
+export function categoriesFamilia(id) {
+  return request({
+    url: `admin/categoriesFamilia/1/${id}`,
+    method: 'get'
+  })
+}
+
 export function save(category) {
   const method = category.id ? 'put' : 'post'
   return request({

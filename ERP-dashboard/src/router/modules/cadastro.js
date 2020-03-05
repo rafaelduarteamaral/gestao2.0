@@ -20,7 +20,7 @@ export default {
       path: 'categories',
       component: () => import('@/views/products/categories'),
       name: 'Categories',
-      meta: { title: 'Categorias', icon: '' }
+      meta: { title: 'Familias de Produto', icon: '' }
     },
     {
       path: 'novoProduto',

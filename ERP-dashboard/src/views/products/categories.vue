@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button type="primary" @click="handleCreate">Nova Categoria</el-button>
+      <el-button type="primary" @click="handleCreate">Nova familia de produto</el-button>
     </div>
     <el-table
       v-loading="loading"
@@ -71,10 +71,14 @@
       <el-col :span="16" :push="1">
         <el-form ref="form" :model="formData">
           <el-form-item label="Título">
-            <el-input v-model="formData.title" placeholder="Nome da Categoria"/>
+            <el-input v-model="formData.title" placeholder="Nome do Grupo"/>
           </el-form-item>
-          <el-form-item label="Description">
-            <el-input v-model="formData.description" type="textarea" placeholder="Descrição"/>
+          <b>Seguir conforme o exemplo abaixo para o cadastro de familias de produto:</b>
+          <p>01: Exemplo1</p>
+          <p>01.01: Exemplo2</p>
+          <p>01.01.01: Exemplo3</p>
+          <el-form-item label="Familias de produto">
+            <el-input v-model="formData.description" type="textarea" placeholder="Familias de produto"/>
           </el-form-item>
         </el-form>
       </el-col>

@@ -1,4 +1,4 @@
-import { all, find, save, destroy } from '@/api/categories'
+import { all, find, save, destroy, categoriesFamilia } from '@/api/categories'
 
 export default {
   state: {
@@ -62,6 +62,18 @@ export default {
     findCategory({ commit }, id) {
       return new Promise((resolve, reject) => {
         find(id)
+          .then(({ data }) => {
+            commit('ADD_CATEGORY', data)
+            commit('SET_CURRENT', data)
+            resolve()
+          })
+          .catch(error => reject(error))
+      })
+    },
+
+    findCategoriesFamilia({ commit }, id) {
+      return new Promise((resolve, reject) => {
+        categoriesFamilia(id)
           .then(({ data }) => {
             commit('ADD_CATEGORY', data)
             commit('SET_CURRENT', data)
