@@ -65,28 +65,7 @@ class CategoryController {
   async show({ params: { id }, transform, response }) {
     var category = await Category.findOrFail(id)
     category = await transform.item(category, Transformer)
-    return response.send(category)  
-  }
-
-  async showFamilia({ params: { id, familiaId }, transform, response }) {
-    var category = await Category.findOrFail(id)
-    var familia = category.description.split('\n')
-    var familias = []
-    for(let i = 0; i <= familia.length - 1; i++){
-      var dadosFamilia = familia[i].split(':')
-      var nFamilia = `${dadosFamilia[0]}: ${dadosFamilia[1]}`
-      var tFamilia = `${dadosFamilia[0]}: ${dadosFamilia[1]}`
-      
-      familias[i] = {
-        value : nFamilia,
-        label: tFamilia
-      }
-
-    }
-    
-    //var familias = JSON.parse(JSON.stringify(familias))
-
-    return response.send(familias)
+    return response.send(category)
   }
 
   /**

@@ -20,7 +20,7 @@ export default {
       path: 'categories',
       component: () => import('@/views/products/categories'),
       name: 'Categories',
-      meta: { title: 'Familias de Produto', icon: '' }
+      meta: { title: 'Categorias', icon: '' }
     },
     {
       path: 'novoProduto',
@@ -175,6 +175,13 @@ export default {
       name: 'EditFabricante',
       meta: { title: 'Editar Fabricante' },
       hidden: true
+    },
+    {
+      path: 'coupons',
+      component: () => import('@/views/coupons/index'),
+      name: 'AllCoupons',
+      hidden: false,
+      meta: { title: 'Coupons', icon: '' }
     }
   ]
 }

@@ -31,7 +31,7 @@
               <br>
               <span>
                 <strong>R$</strong>
-                {{ item.custoCompras }}
+                {{ item.precoVenda }}
               </span>
               <div style="padding-top:10px;">
                 <el-button type="success" @click="addToCart(item)">Adicionar!</el-button>
@@ -49,7 +49,7 @@
         <el-col :span="17">
           <el-card>
             <div slot="header" class="clearfix">
-              <span>Produtos</span>
+              <span>Itens do Pedido</span>
               <el-button
                 type="primary"
                 style="float:right;"
@@ -69,7 +69,7 @@
               <el-table-column label="Nome" prop="product.name"/>
               <el-table-column label="Preço" width="90">
                 <template slot-scope="scope" prop="product.image">
-                  <span>R$ {{ (scope.row.product.custoCompras).toFixed(2) }}</span>
+                  <span>R$ {{ (scope.row.product.precoVenda).toFixed(2) }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="Quantidade" width="150">
@@ -80,7 +80,7 @@
               <el-table-column label="subtotal">
                 <template
                   slot-scope="scope"
-                >R$ {{ parseFloat(scope.row.quantity * scope.row.product.custoCompras).toFixed(2) }}</template>
+                >R$ {{ parseFloat(scope.row.quantity * scope.row.product.precoVenda).toFixed(2) }}</template>
               </el-table-column>
               <el-table-column width="50">
                 <template slot-scope="scope">
@@ -95,16 +95,16 @@
         <el-col :span="7">
           <el-card>
             <div slot="header">
-              <span>Informações da Compra</span>
+              <span>Informações do Pedido</span>
             </div>
             <div>
               <el-form ref="form" label-position="top">
-                <el-form-item label="Fornecedor">
+                <el-form-item label="Cliente">
                   <el-select
                     v-model="formData.user_id"
                     :remote-method="searchClient"
                     :loading="searching"
-                    placeholder="Buscar Fornecedor"
+                    placeholder="Buscar Cliente"
                     filterable
                     remote
                     style="width:100%"
@@ -177,9 +177,9 @@
                   <span>R$ {{ orderTotal.toFixed(2) }}</span>
                 </div>
               </el-form>
-              <!-- <el-button v-show="formData.id" type="danger">
+              <el-button v-show="isEdit" class="buttonDelete" type="danger" @click.prevent="handleDestroy">
                 <i class="el-icon-delete"/>
-              </el-button> -->
+              </el-button>
               <el-button
                 :disabled="canSave"
                 type="primary"
@@ -200,8 +200,9 @@ const defaultForm = {
   user_id: undefined,
   items: [],
   status: '',
-  numero_nfe: '',
   type: 'buy',
+  numero_nfe: '',
+  total: '',
   coupons: [],
   discount: 0.0
 }
@@ -262,7 +263,7 @@ export default {
     orderSubtotal() {
       var total = 0
       this.formData.items.map(item => {
-        total += item.product.custoCompras * item.quantity
+        total += item.product.precoVenda * item.quantity
       })
       return total
     },
@@ -302,6 +303,7 @@ export default {
   },
 
   mounted() {
+    this.scope = []
     if (this.isEdit) {
       this.findOrder(this.$route.params.id)
     }
@@ -388,18 +390,20 @@ export default {
       )
     },
 
-    prepareToSave({ id, user_id, type, items, status, numero_nfe }) {
+    prepareToSave({ id, user_id, type, total, items, status, numero_nfe }) {
       return {
         id,
         user_id,
         status,
-        numero_nfe,
         type,
+        numero_nfe,
+        total: this.orderSubtotal,
         items: items.map(item => {
           return {
             id: item.id ? item.id : undefined,
             product_id: item.product.id,
-            quantity: item.quantity
+            quantity: item.quantity,
+            subtotal: 10
           }
         })
       }
@@ -420,7 +424,7 @@ export default {
 
           if (!this.isEdit) {
             this.$router.push({
-              name: 'EditarCompra',
+              name: 'EditarVenda',
               params: { id: this.formData.id }
             })
           }
@@ -430,6 +434,21 @@ export default {
     showModalAddItems() {
       this.modalAddItems = true
       this.$store.dispatch('fetchProducts')
+    },
+
+    handleDestroy() {
+      this.showDeleteDialog = false
+      this.$store.dispatch('destroyOrder', this.formData.id).then(() => {
+        this.$message({
+          message: 'Venda Deletado!',
+          type: 'warning',
+          showClose: true,
+          duration: 1000
+        })
+
+        this.deleteNavigationtab()
+        this.$router.go(-1)
+      })
     },
 
     handleApplyDiscount(code) {

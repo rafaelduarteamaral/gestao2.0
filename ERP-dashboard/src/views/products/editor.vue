@@ -87,39 +87,10 @@
                 <el-input v-model="formData.nSerie" placeholder="Nº série"/>
               </el-form-item>
             </el-col>
-            <el-col :span="4">
-              <el-form-item label="Familia">
-                <el-select v-model="formData.familia" style="width: 100%" @blur="findFamilia">
-                  <el-option
-                    v-for="familia in familias"
-                    :key="familia.value"
-                    :label="familia.label"
-                    :value="familia.value"
-                  />
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="4">
-              <el-form-item label="Grupos">
-                <el-select v-model="formData.grupo" style="width: 100%" @blur="findFamilia">
-                  <el-option
-                    v-for="grupo in grupos"
-                    :key="grupo.value"
-                    :label="grupo.label"
-                    :value="grupo.value"
-                  />
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="4">
-              <el-form-item label="Subgrupos">
-                <el-select v-model="formData.subgrupo" style="width: 100%" @blur="findFamilia">
-                  <el-option
-                    v-for="subgrupo in subgrupos"
-                    :key="subgrupo.value"
-                    :label="subgrupo.label"
-                    :value="subgrupo.value"
-                  />
+            <el-col :span="5">
+              <el-form-item label="Categorias">
+                <el-select v-model="formData.category_id" :remote-method="searchCategories" :loading="searching" placeholder="Buscar Categorias" filterable remote style="width:100%">
+                  <el-option v-for="(item, index) in categoriesList" :key="index" :label="categoriesLabel(item)" :value="item.id"/>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -254,9 +225,6 @@ const defaultForm = {
   operacaoEntrada: '',
   operacaoSaida: '',
   nSerie: '',
-  familia: '',
-  grupo: '',
-  subgrupo: '',
   margemValorAgregado: '',
   saldoEstoque: '',
   valorEstoque: '',
@@ -273,7 +241,8 @@ const defaultForm = {
   ipiVenda: '',
   mediaDescontos: '',
   acrescimos: '',
-  margemLucro: ''
+  margemLucro: '',
+  category_id: ''
 }
 export default {
   name: 'ProductEditor',
@@ -285,13 +254,7 @@ export default {
       isEdit: false,
       loading: false,
       lucro: 0,
-      familias: [],
-      grupos: [],
-      subgrupos: [],
       categoriesList: [],
-      identificadorFamilia: [],
-      identificadorGrupo: [],
-      identificadorSubgupo: [],
       searching: false,
       showMediaManager: false,
       showDeleteDialog: false,
@@ -310,7 +273,6 @@ export default {
   created() {
     // Salva o nome da rota para evitar bugs nas abas de navegação
     this.tempRoute = Object.assign({}, this.$route)
-    this.findFamilia()
     this.$route.params && this.$route.params.id
       ? (this.isEdit = true)
       : (this.isEdit = false)
@@ -387,30 +349,6 @@ export default {
 
         this.updateNavigationTab()
       })
-    },
-
-    findFamilia() {
-      this.loading = true
-      this.$store.dispatch('findCategoriesFamilia', '0').then(() => {
-        this.loading = false
-        this.formFamilia()
-        this.updateNavigationTab()
-      })
-    },
-
-    formFamilia() {
-      this.familias = Object.assign({}, this.category.map((obj) => {
-        this.identificadorFamilia = obj.value.split(':')
-        return this.identificadorFamilia[0].length === 2 ? obj : ''
-      }))
-      this.grupos = Object.assign({}, this.category.map((obj) => {
-        this.identificadorGrupo = obj.value.split(':')
-        return this.identificadorGrupo[0].length === 5 && this.identificadorGrupo[0].substr(0, 2) === this.formData.familia.split(':')[0] ? obj : ''
-      }))
-      this.subgrupos = Object.assign({}, this.category.map((obj) => {
-        this.identificadorSubgupo = obj.value.split(':')
-        return this.identificadorSubgupo[0].length === 8 && this.identificadorSubgupo[0].substr(0, 5) === this.formData.grupo.split(':')[0] ? obj : ''
-      }))
     },
 
     handleDestroy() {

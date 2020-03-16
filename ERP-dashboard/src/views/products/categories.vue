@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button type="primary" @click="handleCreate">Nova familia de produto</el-button>
+      <el-button type="primary" @click="handleCreate">Nova Categoria</el-button>
     </div>
     <el-table
       v-loading="loading"
@@ -71,14 +71,10 @@
       <el-col :span="16" :push="1">
         <el-form ref="form" :model="formData">
           <el-form-item label="Título">
-            <el-input v-model="formData.title" placeholder="Nome do Grupo"/>
+            <el-input v-model="formData.title" placeholder="Nome da Categoria"/>
           </el-form-item>
-          <b>Seguir conforme o exemplo abaixo para o cadastro de familias de produto:</b>
-          <p>01: Exemplo1</p>
-          <p>01.01: Exemplo2</p>
-          <p>01.01.01: Exemplo3</p>
-          <el-form-item label="Familias de produto">
-            <el-input v-model="formData.description" type="textarea" placeholder="Familias de produto"/>
+          <el-form-item label="Description">
+            <el-input v-model="formData.description" type="textarea" placeholder="Descrição"/>
           </el-form-item>
         </el-form>
       </el-col>
@@ -105,17 +101,13 @@ import Pagination from '@/components/Pagination'
 import { mapGetters } from 'vuex'
 import { orderBy } from 'lodash'
 import MediaManager from '@/components/MediaManager'
-
 const defaultForm = {
   title: '',
   description: ''
 }
-
 export default {
   name: 'CategoriesListing',
-
   components: { Pagination, MediaManager },
-
   data() {
     return {
       query: {
@@ -134,7 +126,6 @@ export default {
       isEdit: false
     }
   },
-
   computed: {
     ...mapGetters({
       categories: 'categories',
@@ -144,19 +135,15 @@ export default {
       return orderBy(this.categories.data, 'id')
     }
   },
-
   created() {
     if (this.$route.query && this.$route.query.page) {
       this.query.page = parseInt(this.$route.query.page)
     }
   },
-
   mounted() {
     this.fetch()
-
     this.formData = Object.assign({}, defaultForm)
   },
-
   methods: {
     fetch() {
       this.loading = true
@@ -165,18 +152,15 @@ export default {
         this.loading = false
       })
     },
-
     handleSearch() {
       this.loading = true
       this.fetch().then(() => (this.loading = false))
     },
-
     handleClearSearch() {
       this.query.title = undefined
       this.loading = true
       this.fetch().then(() => (this.loading = false))
     },
-
     handleEdit(id) {
       this.isEdit = true
       this.loading = true
@@ -186,13 +170,11 @@ export default {
         this.dialogVisible = true
       })
     },
-
     handleCreate() {
       this.isEdit = false
       this.formData = Object.assign({}, defaultForm)
       this.dialogVisible = true
     },
-
     handleSave() {
       this.loading = true
       this.$store.dispatch('saveCategory', this.formData).then(() => {
@@ -207,7 +189,6 @@ export default {
         this.isEdit = true
       })
     },
-
     handleDelete() {
       this.loading = true
       this.$store.dispatch('destroyCategory', this.formData.id).then(() => {
@@ -222,12 +203,10 @@ export default {
         })
       })
     },
-
     changeImage(image) {
       this.formData.image_id = image.id
       this.formData.image = image
     },
-
     updateQueryParameters() {
       if (this.query.page > 1) {
         // eslint-disable-next-line
@@ -240,18 +219,16 @@ export default {
   }
 }
 </script>
-<style scoped>
-.category-thumb {
-  cursor: pointer;
-}
-img.category-image {
-  width: 100%;
-  height: 1000%;
-}
-
-.product-tumbnail img {
-  height: 64px;
-  width: 64px;
-}
+  <style scoped>
+  .category-thumb {
+    cursor: pointer;
+  }
+  img.category-image {
+    width: 100%;
+    height: 1000%;
+  }
+  .product-tumbnail img {
+    height: 64px;
+    width: 64px;
+  }
 </style>
-

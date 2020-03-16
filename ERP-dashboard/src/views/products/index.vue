@@ -10,7 +10,7 @@
     >
       <el-table-column label="ID" prop="id" width="60"/>
       <el-table-column label="Nome" prop="name"/>
-      <el-table-column label="Preço" prop="valorVenda"/>
+      <el-table-column label="Preço" prop="precoVenda"/>
       <el-table-column label="Imagem">
         <template slot-scope="scope">
           <div class="product-tumbnail">

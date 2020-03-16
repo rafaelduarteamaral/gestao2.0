@@ -9,13 +9,12 @@ export default {
     title: 'Cupons',
     icon: 'coupon'
   },
-  children: [
-    {
-      path: 'all',
-      component: () => import('@/views/coupons/index'),
-      name: 'AllCoupons',
-      hidden: true,
-      meta: { title: 'Todos os Cupons', icon: '' }
-    }
-  ]
+  children: [{
+    path: 'all',
+    component: () =>
+            import('@/views/coupons/index'),
+    name: 'AllCoupons',
+    hidden: true,
+    meta: { title: 'Todos os Cupons', icon: '' }
+  }]
 }

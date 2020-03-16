@@ -5,6 +5,7 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const Order = use('App/Models/Order')
+const OrderItem = use('App/Models/OrderItem')
 const Database = use('Database')
 const Service = use('App/Services/Order/OrderService')
 const Coupon = use('App/Models/Coupon')
@@ -35,8 +36,10 @@ class OrderController {
     } else if(type) {
       query.where('type', 'LIKE', type)
     }
-
+    
     var orders = await query.paginate(pagination.page, pagination.limit)
+    return response.send(orders)
+
     orders = await transform.paginate(orders, Transformer)
     return response.send(orders)
   }
@@ -52,8 +55,8 @@ class OrderController {
   async store({ request, response, transform }) {
     const trx = await Database.beginTransaction()
     try {
-      const { user_id, type, items, status, numero_nfe } = request.all()
-      var order = await Order.create({ user_id, type, status, numero_nfe }, trx)
+      const { user_id, type, items, status, numero_nfe, total } = request.all()
+      var order = await Order.create({ user_id, type, status, numero_nfe, total }, trx)
       const service = new Service(order, trx)
       if (items && items.length > 0) {
         await service.syncItems(items)
@@ -99,8 +102,8 @@ class OrderController {
     var order = await Order.findOrFail(id)
     const trx = await Database.beginTransaction()
     try {
-      const { user_id, items, status, numero_nfe } = request.all()
-      order.merge({ user_id, status, numero_nfe })
+      const { user_id, items, status, numero_nfe, total } = request.all()
+      order.merge({ user_id, status, numero_nfe, total })
       const service = new Service(order, trx)
       await service.updateItems(items)
       await order.save(trx)
@@ -127,18 +130,15 @@ class OrderController {
    */
   async destroy({ params: { id }, request, response }) {
     const order = await Order.findOrFail(id)
-    const trx = await Databse.beginTransaction()
+    const orderItem = await OrderItem.findBy('order_id', id)
     try {
-      await order.items().delete(trx)
-      await order.coupons().delete(trx)
-      await order.delete(trx)
-      await trx.commit()
+      await order.delete()
+      await orderItem.delete()
       return response.status(204).send()
     } catch (error) {
-      await trx.rollback()
-      return response.status(400).send({
-        message: 'Erro ao deletar este pedido!'
-      })
+      return response
+        .status(500)
+        .send({ message: 'Não foi possível deletar este produto!' })
     }
   }
 

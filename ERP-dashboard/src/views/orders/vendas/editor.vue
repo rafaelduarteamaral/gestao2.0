@@ -31,7 +31,7 @@
               <br>
               <span>
                 <strong>R$</strong>
-                {{ item.price }}
+                {{ item.precoVenda }}
               </span>
               <div style="padding-top:10px;">
                 <el-button type="success" @click="addToCart(item)">Adicionar!</el-button>
@@ -69,7 +69,7 @@
               <el-table-column label="Nome" prop="product.name"/>
               <el-table-column label="Preço" width="90">
                 <template slot-scope="scope" prop="product.image">
-                  <span>R$ {{ (scope.row.product.price).toFixed(2) }}</span>
+                  <span>R$ {{ (scope.row.product.precoVenda).toFixed(2) }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="Quantidade" width="150">
@@ -80,7 +80,7 @@
               <el-table-column label="subtotal">
                 <template
                   slot-scope="scope"
-                >R$ {{ parseFloat(scope.row.quantity * scope.row.product.price).toFixed(2) }}</template>
+                >R$ {{ parseFloat(scope.row.quantity * scope.row.product.precoVenda).toFixed(2) }}</template>
               </el-table-column>
               <el-table-column width="50">
                 <template slot-scope="scope">
@@ -174,9 +174,9 @@
                   <span>R$ {{ orderTotal.toFixed(2) }}</span>
                 </div>
               </el-form>
-              <!-- <el-button v-show="formData.id" type="danger">
+              <el-button v-show="isEdit" class="buttonDelete" type="danger" @click.prevent="handleDestroy">
                 <i class="el-icon-delete"/>
-              </el-button> -->
+              </el-button>
               <el-button
                 :disabled="canSave"
                 type="primary"
@@ -198,6 +198,7 @@ const defaultForm = {
   items: [],
   status: '',
   type: 'sell',
+  total: '',
   coupons: [],
   discount: 0.0
 }
@@ -212,6 +213,7 @@ export default {
       loading: false,
       searching: false,
       product: '',
+      showDeleteDialog: false,
       couponCode: '',
       modalAddItems: false,
       clientList: [],
@@ -258,7 +260,7 @@ export default {
     orderSubtotal() {
       var total = 0
       this.formData.items.map(item => {
-        total += item.product.price * item.quantity
+        total += item.product.precoVenda * item.quantity
       })
       return total
     },
@@ -384,17 +386,19 @@ export default {
       )
     },
 
-    prepareToSave({ id, user_id, type, items, status }) {
+    prepareToSave({ id, user_id, type, total, items, status }) {
       return {
         id,
         user_id,
         status,
         type,
+        total: this.orderSubtotal,
         items: items.map(item => {
           return {
             id: item.id ? item.id : undefined,
             product_id: item.product.id,
-            quantity: item.quantity
+            quantity: item.quantity,
+            subtotal: 10
           }
         })
       }
@@ -420,6 +424,21 @@ export default {
             })
           }
         })
+    },
+
+    handleDestroy() {
+      this.showDeleteDialog = false
+      this.$store.dispatch('destroyOrder', this.formData.id).then(() => {
+        this.$message({
+          message: 'Venda Deletado!',
+          type: 'warning',
+          showClose: true,
+          duration: 1000
+        })
+
+        this.deleteNavigationtab()
+        this.$router.go(-1)
+      })
     },
 
     showModalAddItems() {

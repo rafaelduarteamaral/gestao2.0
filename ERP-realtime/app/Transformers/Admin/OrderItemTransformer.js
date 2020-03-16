@@ -19,7 +19,7 @@ class OrderItemTransformer extends TransformerAbstract {
     return {
       id: model.id,
       subtotal: model.subtotal,
-      quantity: model.quantity
+      quantity: model.quantity,
     }
   }
 
