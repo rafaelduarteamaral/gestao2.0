@@ -20,6 +20,7 @@ import bancos from './modules/bancos'
 import unidades from './modules/unidades'
 import seguimentoNegocios from './modules/seguimentoNegocios'
 import fabricantes from './modules/fabricantes'
+import tipoDocumento from './modules/tipoDocumento'
 
 Vue.use(Vuex)
 
@@ -43,7 +44,8 @@ const store = new Vuex.Store({
     bancos,
     unidades,
     seguimentoNegocios,
-    fabricantes
+    fabricantes,
+    tipoDocumento
   },
   getters
 })
