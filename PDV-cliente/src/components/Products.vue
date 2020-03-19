@@ -33,7 +33,7 @@
         </div>
         <p class="is-pulled-right">
           <span class="title is-4">
-            <strong>R&dollar; {{ product.price }}</strong>
+            <strong>R&dollar; {{ product.precoVenda }}</strong>
           </span>
         </p>
       </div>
@@ -89,7 +89,7 @@
         params: {
           id: product.id,
           title: product.name,
-          price: product.price,
+          price: product.precoVenda,
           rating: product.ratings,
           reviews: product.reviews,
           isAddedBtn: product.isAddedBtn

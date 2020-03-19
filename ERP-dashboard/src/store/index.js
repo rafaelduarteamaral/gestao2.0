@@ -21,7 +21,8 @@ import unidades from './modules/unidades'
 import seguimentoNegocios from './modules/seguimentoNegocios'
 import fabricantes from './modules/fabricantes'
 import tipoDocumento from './modules/tipoDocumento'
-
+import cfops from './modules/cfops'
+import ncms from './modules/ncms'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -45,7 +46,9 @@ const store = new Vuex.Store({
     unidades,
     seguimentoNegocios,
     fabricantes,
-    tipoDocumento
+    tipoDocumento,
+    cfops,
+    ncms
   },
   getters
 })

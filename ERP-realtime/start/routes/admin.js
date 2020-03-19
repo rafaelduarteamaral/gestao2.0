@@ -28,6 +28,16 @@ Route.group(() => {
   Route.resource('notafiscal', 'NotaFiscalController').apiOnly()
 
   /**
+   * Cfops Only
+   */
+  Route.resource('cfops', 'CfopController').apiOnly()
+
+  /**
+   * Ncm Only
+   */
+  Route.resource('ncms', 'NcmController').apiOnly()
+
+  /**
    * Endereco api only
    */
   Route.resource('endereco', 'EnderecoController').apiOnly()

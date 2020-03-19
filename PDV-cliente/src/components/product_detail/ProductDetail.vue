@@ -72,7 +72,7 @@
         </div>
         <div class="card-content__price is-pulled-left">
           <span class="title is-3">
-            <strong>R$ {{ product.price }}</strong>
+            <strong>R$ {{ product.precoVenda }}</strong>
           </span>
         </div>
         <div class="card-content__btn is-pulled-right">

@@ -11,6 +11,7 @@ import Layout from '@/views/layout/Layout'
 // import productsRouter from './modules/products'
 import cadastroRouter from './modules/cadastro'
 import ordersRouter from './modules/orders'
+import fiscalRouter from './modules/fiscal'
 // import couponsRouter from './modules/coupons'
 // import usersRouter from './modules/users'
 // import relatoriosRouter from './modules/relatorios'
@@ -98,7 +99,8 @@ export const constantRouterMap = [
   // chartsRouter,
   // productsRouter,
   cadastroRouter,
-  ordersRouter
+  ordersRouter,
+  fiscalRouter
   // couponsRouter,
   // usersRouter,
   // relatoriosRouter

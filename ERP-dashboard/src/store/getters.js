@@ -33,6 +33,8 @@ const getters = {
   currentSeguimentoNegocio: state => state.seguimentoNegocios.currentSeguimentoNegocio,
   fabricantes: state => state.fabricantes,
   currentFabricante: state => state.fabricantes.currentFabricante,
+  cfops: state => state.cfops,
+  currentCfop: state => state.cfops.currentCfop,
   coupons: state => state.coupons,
   currentCoupon: state => state.coupons.currentCoupon,
   categories: state => state.categories,
@@ -41,6 +43,8 @@ const getters = {
   users: state => state.users,
   currentUser: state => state.users.currentUser,
   currentEndereco: state => state.endereco.currentEndereco,
-  dashboard: state => state.dashboard
+  dashboard: state => state.dashboard,
+  ncms: state => state.ncms,
+  currentNcm: state => state.ncms.currentNcm
 }
 export default getters

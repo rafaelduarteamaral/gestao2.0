@@ -39,9 +39,6 @@ class OrderController {
     
     var orders = await query.paginate(pagination.page, pagination.limit)
     return response.send(orders)
-
-    orders = await transform.paginate(orders, Transformer)
-    return response.send(orders)
   }
 
   /**
