@@ -3,13 +3,12 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 
-class CstOrigemSchema extends Schema {
+class FiscalHistoricoSchema extends Schema {
   up () {
-    this.create('cst_origems', (table) => {
+    this.create('fiscal_historicos', (table) => {
       table.increments()
-      table.string('codigo', 10)
-      table.string('nome', 150)
-      table.text('descricao')
+      table.text('texto')
+      table.boolean('ativo').defaultTo(false)
       table.integer('empresa_id').unsigned()
       table
       .foreign('empresa_id')
@@ -21,8 +20,8 @@ class CstOrigemSchema extends Schema {
   }
 
   down () {
-    this.drop('cst_origems')
+    this.drop('fiscal_historicos')
   }
 }
 
-module.exports = CstOrigemSchema
+module.exports = FiscalHistoricoSchema

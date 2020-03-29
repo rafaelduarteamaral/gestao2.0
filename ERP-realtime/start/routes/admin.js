@@ -38,6 +38,27 @@ Route.group(() => {
   Route.resource('ncms', 'NcmController').apiOnly()
 
   /**
+   * CstOrigem Only
+   */
+  Route.resource('cstOrigems', 'CstOrigemController').apiOnly()
+
+  /**
+   * Historico Only
+   */
+  Route.resource('historicos', 'FiscalHistoricoController').apiOnly()
+
+
+  /**
+   * CstTributacao Only
+   */
+  Route.resource('cstTributacaos', 'CstTributacaoController').apiOnly()
+
+    /**
+   * Aliquota Only
+   */
+  Route.resource('aliquotas', 'AliquotaController').apiOnly()
+
+  /**
    * Endereco api only
    */
   Route.resource('endereco', 'EnderecoController').apiOnly()

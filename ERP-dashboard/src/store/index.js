@@ -23,6 +23,10 @@ import fabricantes from './modules/fabricantes'
 import tipoDocumento from './modules/tipoDocumento'
 import cfops from './modules/cfops'
 import ncms from './modules/ncms'
+import cstOrigems from './modules/cstOrigem'
+import cstTributacaos from './modules/cstTributacao'
+import historicos from './modules/historico'
+import aliquotas from './modules/aliquota'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -48,7 +52,11 @@ const store = new Vuex.Store({
     fabricantes,
     tipoDocumento,
     cfops,
-    ncms
+    ncms,
+    cstOrigems,
+    cstTributacaos,
+    historicos,
+    aliquotas
   },
   getters
 })

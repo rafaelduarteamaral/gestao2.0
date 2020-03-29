@@ -45,6 +45,14 @@ const getters = {
   currentEndereco: state => state.endereco.currentEndereco,
   dashboard: state => state.dashboard,
   ncms: state => state.ncms,
-  currentNcm: state => state.ncms.currentNcm
+  currentNcm: state => state.ncms.currentNcm,
+  cstOrigems: state => state.cstOrigems,
+  currentCstOrigem: state => state.cstOrigems.currentCstOrigem,
+  cstTributacaos: state => state.cstTributacaos,
+  currentCstTributacao: state => state.cstTributacaos.currentCstTributacao,
+  historicos: state => state.historicos,
+  currentHistorico: state => state.historicos.currentHistorico,
+  aliquotas: state => state.aliquotas,
+  currentAliquota: state => state.aliquotas.currentAliquota
 }
 export default getters

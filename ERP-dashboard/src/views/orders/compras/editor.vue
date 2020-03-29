@@ -74,7 +74,7 @@
               </el-table-column>
               <el-table-column label="Quantidade" width="150">
                 <template slot-scope="scope">
-                  <el-input-number v-model="scope.row.quantity" :min="1" :max="100" size="mini"/>
+                  <el-input-number v-model="scope.row.quantity" :min="1" size="mini"/>
                 </template>
               </el-table-column>
               <el-table-column label="subtotal">
