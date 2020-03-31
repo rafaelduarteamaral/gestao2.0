@@ -53,10 +53,15 @@ Route.group(() => {
    */
   Route.resource('cstTributacaos', 'CstTributacaoController').apiOnly()
 
-    /**
+  /**
    * Aliquota Only
    */
   Route.resource('aliquotas', 'AliquotaController').apiOnly()
+
+  /**
+   * Tipo Operação
+   */
+  Route.resource('tipooperacaos', 'TipoOperacaoController').apiOnly()
 
   /**
    * Endereco api only

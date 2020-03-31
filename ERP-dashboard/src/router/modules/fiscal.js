@@ -129,6 +129,26 @@ export default {
       name: 'EditAliquota',
       meta: { title: 'Editar Aliquota' },
       hidden: true
+    },
+    {
+      path: 'tipooperacaos',
+      component: () => import('@/views/tipoOperacao/index'),
+      name: 'tipooperacaos',
+      meta: { title: 'Tipo operacao' }
+    },
+    {
+      path: 'tipooperacao',
+      component: () => import('@/views/tipoOperacao/editor'),
+      name: 'NewTipoOperacao',
+      meta: { title: 'Novo TipoOperacao' },
+      hidden: true
+    },
+    {
+      path: 'tipooperacao/:id',
+      component: () => import('@/views/tipoOperacao/editor'),
+      name: 'EditTipoOperacao',
+      meta: { title: 'Editar TipoOperacao' },
+      hidden: true
     }
   ]
 }

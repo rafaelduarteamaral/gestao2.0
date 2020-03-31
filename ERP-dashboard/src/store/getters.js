@@ -53,6 +53,8 @@ const getters = {
   historicos: state => state.historicos,
   currentHistorico: state => state.historicos.currentHistorico,
   aliquotas: state => state.aliquotas,
-  currentAliquota: state => state.aliquotas.currentAliquota
+  currentAliquota: state => state.aliquotas.currentAliquota,
+  tipoOperacaos: state => state.tipoOperacaos,
+  currentTipoOperacao: state => state.tipoOperacaos.currentAliquota
 }
 export default getters
