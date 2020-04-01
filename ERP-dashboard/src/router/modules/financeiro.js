@@ -11,143 +11,23 @@ export default {
   },
   children: [
     {
-      path: 'cfops',
-      component: () => import('@/views/cfops/index'),
-      name: 'cfops',
-      meta: { title: 'Cfop' }
+      path: 'tipoDocumentos',
+      component: () => import('@/views/tipoDocumento/index'),
+      name: 'tipoDocumentos',
+      meta: { title: 'Tipo de Documentos' }
     },
     {
-      path: 'cfop',
-      component: () => import('@/views/cfops/editor'),
-      name: 'NewCfop',
-      meta: { title: 'Novo Cfop' },
+      path: 'tipoDocumento',
+      component: () => import('@/views/tipoDocumento/editor'),
+      name: 'NewTipoDocumento',
+      meta: { title: 'Novo Tipo de Documento' },
       hidden: true
     },
     {
-      path: 'cfop/:id',
-      component: () => import('@/views/cfops/editor'),
-      name: 'EditCfop',
-      meta: { title: 'Editar Cfop' },
-      hidden: true
-    },
-    {
-      path: 'ncms',
-      component: () => import('@/views/ncms/index'),
-      name: 'ncms',
-      meta: { title: 'Ncm' }
-    },
-    {
-      path: 'ncm',
-      component: () => import('@/views/ncms/editor'),
-      name: 'NewNcm',
-      meta: { title: 'Novo Ncm' },
-      hidden: true
-    },
-    {
-      path: 'ncm/:id',
-      component: () => import('@/views/ncms/editor'),
-      name: 'EditNcm',
-      meta: { title: 'Editar Ncm' },
-      hidden: true
-    },
-    {
-      path: 'cstOrigems',
-      component: () => import('@/views/cstOrigems/index'),
-      name: 'cstOrigems',
-      meta: { title: 'Cst Origem' }
-    },
-    {
-      path: 'cstOrigem',
-      component: () => import('@/views/cstOrigems/editor'),
-      name: 'NewCstOrigem',
-      meta: { title: 'Novo Cst Origem' },
-      hidden: true
-    },
-    {
-      path: 'cstOrigem/:id',
-      component: () => import('@/views/cstOrigems/editor'),
-      name: 'EditCstOrigem',
-      meta: { title: 'Editar Cst Origem' },
-      hidden: true
-    },
-    {
-      path: 'cstTributacaos',
-      component: () => import('@/views/cstTributacaos/index'),
-      name: 'cstTributacaos',
-      meta: { title: 'Cst Tributacao' }
-    },
-    {
-      path: 'cstTributacao',
-      component: () => import('@/views/cstTributacaos/editor'),
-      name: 'NewCstTributacao',
-      meta: { title: 'Novo Cst Tributacao' },
-      hidden: true
-    },
-    {
-      path: 'cstTributacao/:id',
-      component: () => import('@/views/cstTributacaos/editor'),
-      name: 'EditCstTributacao',
-      meta: { title: 'Editar Cst Tributacao' },
-      hidden: true
-    },
-    {
-      path: 'historicos',
-      component: () => import('@/views/historicos/index'),
-      name: 'historicos',
-      meta: { title: 'Historico' }
-    },
-    {
-      path: 'historico',
-      component: () => import('@/views/historicos/editor'),
-      name: 'NewHistorico',
-      meta: { title: 'Novo Historico' },
-      hidden: true
-    },
-    {
-      path: 'historico/:id',
-      component: () => import('@/views/historicos/editor'),
-      name: 'EditHistorico',
-      meta: { title: 'Editar Historico' },
-      hidden: true
-    },
-    {
-      path: 'aliquotas',
-      component: () => import('@/views/aliquotas/index'),
-      name: 'aliquotas',
-      meta: { title: 'Aliquota' }
-    },
-    {
-      path: 'aliquota',
-      component: () => import('@/views/aliquotas/editor'),
-      name: 'NewAliquota',
-      meta: { title: 'Novo Aliquota' },
-      hidden: true
-    },
-    {
-      path: 'aliquota/:id',
-      component: () => import('@/views/aliquotas/editor'),
-      name: 'EditAliquota',
-      meta: { title: 'Editar Aliquota' },
-      hidden: true
-    },
-    {
-      path: 'tipooperacaos',
-      component: () => import('@/views/tipoOperacao/index'),
-      name: 'tipooperacaos',
-      meta: { title: 'Tipo operacao' }
-    },
-    {
-      path: 'tipooperacao',
-      component: () => import('@/views/tipoOperacao/editor'),
-      name: 'NewTipoOperacao',
-      meta: { title: 'Novo TipoOperacao' },
-      hidden: true
-    },
-    {
-      path: 'tipooperacao/:id',
-      component: () => import('@/views/tipoOperacao/editor'),
-      name: 'EditTipoOperacao',
-      meta: { title: 'Editar TipoOperacao' },
+      path: 'tipoDocumento/:id',
+      component: () => import('@/views/tipoDocumento/editor'),
+      name: 'EditTipoDocumento',
+      meta: { title: 'Editar Tipo de Documento' },
       hidden: true
     }
   ]
