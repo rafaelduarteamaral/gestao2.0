@@ -5,11 +5,28 @@
         <el-col :span="24">
           <el-card class="box-card">
             <div slot="header">
-              <span>tipo de documento</span>
+              <span>Tipo de Documento</span>
             </div>
-            <el-col :span="5">
+            <el-col :span="10">
               <el-form-item label="Nome:">
                 <el-input v-model="formData.nome" type="text"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="5">
+              <el-form-item label="Sigla:">
+                <el-input v-model="formData.nome" type="text"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <el-form-item label="Plano de Contas:">
+                <el-select v-model="formData.plano_de_contas" style="width:100%">
+                  <el-option
+                    v-for="plano_de_contas in plano_de_contas"
+                    :key="plano_de_contas.value"
+                    :label="plano_de_contas.label"
+                    :value="plano_de_contas.value"
+                  />
+                </el-select>
               </el-form-item>
             </el-col>
           </el-card>
@@ -52,7 +69,7 @@ import { mapGetters } from 'vuex'
 import MediaManager from '@/components/MediaManager'
 
 export default {
-  name: 'FabricanteEditor',
+  name: 'TipoDocumentoEditor',
 
   components: { MediaManager },
 
@@ -108,7 +125,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      pagtipoDocumento: 'currenttipoDocumento'
+      pagTipoDocumento: 'currentTipoDocumento'
     })
   },
 
@@ -123,29 +140,29 @@ export default {
 
   mounted() {
     if (this.isEdit) {
-      this.findtipoDocumento(this.$route.params.id)
+      this.findTipoDocumento(this.$route.params.id)
     }
   },
 
   methods: {
     findtipoDocumento(id) {
       this.loading = true
-      this.$store.dispatch('findtipoDocumento', id).then(() => {
+      this.$store.dispatch('findTipoDocumento', id).then(() => {
         this.loading = false
-        this.selecttipoDcoumento = this.pagtipoDocumento
+        this.selectTipoDcoumento = this.pagTipoDocumento
         this.fillForm()
       })
     },
 
     fillForm() {
-      this.formData = Object.assign({}, this.selecttipoDocumento)
+      this.formData = Object.assign({}, this.selectTipoDocumento)
       this.updateNavigationTab()
     },
 
     handleSave() {
       this.loading = true
       this.$store
-        .dispatch('savetipoDocumento', this.prepareToSave(this.formData))
+        .dispatch('saveTipoDocumento', this.prepareToSave(this.formData))
         .then(() => {
           this.loading = false
           this.$message({
@@ -190,7 +207,6 @@ export default {
     prepareToSave(data) {
       return {
         id: data.id,
-        cod_registro: data.cod_registro,
         nome: data.nome,
         sigla: data.sigla,
         plano_de_contas: data.plano_de_contas

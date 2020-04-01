@@ -7,10 +7,15 @@ class TipoDocumentoSchema extends Schema {
   up () {
     this.create('tipo_documentos', (table) => {
       table.increments()
-      table.integer('cod_registro', 100)
       table.string('nome', 70)
       table.string('sigla', 20)
       table.string('plano_de_contas', 9)
+      table.integer('empresa_id').unsigned()
+      table
+        .foreign('empresa_id')
+        .references('id')
+        .inTable('empresas')
+        .onDelete('cascade')
       table.timestamps()
     })
   }

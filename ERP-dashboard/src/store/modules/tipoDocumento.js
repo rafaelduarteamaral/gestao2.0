@@ -18,7 +18,7 @@ export default {
     },
 
     SET_CURRENT: (state, tipoDocumento) => {
-      state.currenttipoDocumento = tipoDocumento
+      state.currentTipoDocumento = tipoDocumento
     },
 
     UPDATE_TIPODOCUMENTO: (state, tipoDocumento) => {
@@ -32,22 +32,22 @@ export default {
        * e atualiza seus valores
        */
 
-      if (state.currenttipoDocumento && state.currenttipoDocumento.id === tipoDocumento.id) {
-        state.currenttipoDocumento = tipoDocumento
+      if (state.currentTipoDocumento && state.currentTipoDocumento.id === tipoDocumento.id) {
+        state.currentTipoDocumento = tipoDocumento
       }
     },
 
     REMOVE_TIPODOCUMENTO: (state, id) => {
       state.data = state.data.filter(item => item.id !== id)
 
-      if (state.currenttipoDocumento && state.currenttipoDocumento.id === id) {
-        state.currenttipoDocumento = {}
+      if (state.currentTipoDocumento && state.currentTipoDocumento.id === id) {
+        state.currentTipoDocumento = {}
       }
     }
   },
 
   actions: {
-    fetchtipoDocumento({ commit }, query) {
+    fetchTipoDocumentos({ commit }, query) {
       return new Promise((resolve, reject) => {
         all(query)
           .then(({ data }) => {
@@ -58,7 +58,7 @@ export default {
       })
     },
 
-    findtipoDocumento({ commit }, id) {
+    findTipoDocumento({ commit }, id) {
       return new Promise((resolve, reject) => {
         find(id)
           .then(({ data }) => {

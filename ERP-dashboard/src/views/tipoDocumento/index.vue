@@ -1,14 +1,14 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button type="primary" @click="handleCreate">Novo Tipo de Documento</el-button>
+      <el-button type="primary" @click="handleCreate">Novo tipoDocumento</el-button>
     </div>
     <el-row>
       <el-table
         v-loading="loading"
-        :data="fabricantes.data ? fabricantes.data.filter(data => !query.nome || data.id.toString().includes(query.nome.toLowerCase()) || data.nome.toLowerCase().includes(query.nome.toLowerCase()) || data.sigla.toLowerCase().includes(query.nome.toLowerCase()) || data.contaorigem.toLowerCase().includes(query.nome.toLowerCase()) ) : [] "
+        :data="tipoDocumentos.data ? tipoDocumentos.data.filter(data => !query.nome || data.id.toString().includes(query.nome.toLowerCase()) || data.nome.toLowerCase().includes(query.nome.toLowerCase()) || data.sigla.toLowerCase().includes(query.nome.toLowerCase())) : [] "
         fit
-        empty-text="Nenhum tipo de documento encontrado"
+        empty-text="Nenhum tipoDocumento encontrado"
       >
         <el-table-column label="ID" prop="id" width="60"/>
         <el-table-column label="Nome">
@@ -19,11 +19,6 @@
         <el-table-column label="Sigla">
           <template slot-scope="scope">
             <span>{{ `${scope.row.sigla}` }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="Conta Origem">
-          <template slot-scope="scope">
-            <span>{{ `${scope.row.contaorigem}` }}</span>
           </template>
         </el-table-column>
         <el-table-column align="right" width="200">
@@ -44,8 +39,8 @@
         </el-table-column>
       </el-table>
       <pagination
-        v-show="fabricantes.pagination.total && fabricantes.pagination.total > 0"
-        :total="fabricantes.pagination.total ? fabricantes.pagination.total : 0"
+        v-show="tipoDocumentos.pagination.total && tipoDocumentos.pagination.total > 0"
+        :total="tipoDocumentos.pagination.total ? tipoDocumentos.pagination.total : 0"
         :page.sync="query.page"
         :limit.sync="query.limit"
         @pagination="fetch"
@@ -75,7 +70,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      fabricantes: 'fabricantes'
+      tipoDocumentos: 'tipoDocumentos'
     })
   },
 
@@ -93,17 +88,17 @@ export default {
     fetch() {
       this.loading = true
       this.updateQueryParameters()
-      this.$store.dispatch('fetchFabricantes', this.query).then(() => {
+      this.$store.dispatch('fetchTipoDocumentos', this.query).then(() => {
         this.loading = false
       })
     },
 
     handleCreate() {
-      this.$router.push({ name: 'NewtipoDocumento' })
+      this.$router.push({ name: 'NewTipoDocumento' })
     },
 
     handleEdit(id) {
-      this.$router.push({ name: 'EdittipoDocumento', params: { id }})
+      this.$router.push({ name: 'EditTipoDocumento', params: { id }})
     },
 
     handleClearSearch() {

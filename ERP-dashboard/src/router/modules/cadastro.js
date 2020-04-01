@@ -184,22 +184,22 @@ export default {
       meta: { title: 'Coupons', icon: '' }
     },
     {
-      path: 'tipoDocumento',
+      path: 'tipoDocumentos',
       component: () => import('@/views/tipoDocumento/index'),
-      name: 'tipoDocumento',
-      meta: { title: 'Tipo de Documento' }
+      name: 'tipoDocumentos',
+      meta: { title: 'Tipo de Documentos' }
     },
     {
       path: 'tipoDocumento',
       component: () => import('@/views/tipoDocumento/editor'),
-      name: 'NewtipoDocumento',
+      name: 'NewTipoDocumento',
       meta: { title: 'Novo Tipo de Documento' },
       hidden: true
     },
     {
       path: 'tipoDocumento/:id',
       component: () => import('@/views/tipoDocumento/editor'),
-      name: 'EdittipoDocumento',
+      name: 'EditTipoDocumento',
       meta: { title: 'Editar Tipo de Documento' },
       hidden: true
     }

@@ -93,6 +93,10 @@ Route.group(() => {
    */
   Route.resource('fabricantes', 'FabricanteController').apiOnly()
 
+  /**
+   * Fabricantes
+   */
+  Route.resource('tipoDocumento', 'TipoDocumentoController').apiOnly()
     /**
    * Bancos
    */

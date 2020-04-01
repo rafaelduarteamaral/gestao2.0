@@ -20,7 +20,7 @@ import bancos from './modules/bancos'
 import unidades from './modules/unidades'
 import seguimentoNegocios from './modules/seguimentoNegocios'
 import fabricantes from './modules/fabricantes'
-import tipoDocumento from './modules/tipoDocumento'
+import tipoDocumentos from './modules/tipoDocumento'
 import cfops from './modules/cfops'
 import ncms from './modules/ncms'
 import cstOrigems from './modules/cstOrigem'
@@ -51,7 +51,7 @@ const store = new Vuex.Store({
     unidades,
     seguimentoNegocios,
     fabricantes,
-    tipoDocumento,
+    tipoDocumentos,
     cfops,
     ncms,
     cstOrigems,
