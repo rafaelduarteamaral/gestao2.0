@@ -1,13 +1,13 @@
 import Layout from '@/views/layout/Layout'
 
 export default {
-  path: '/fiscal',
+  path: '/financeiro',
   component: Layout,
-  redirect: '/fiscal/all',
-  name: 'Fiscal',
+  redirect: '/financeiro/all',
+  name: 'Financeiro',
   meta: {
-    title: 'Fiscal',
-    icon: 'pan_tool'
+    title: 'Financeiro',
+    icon: 'local_atm'
   },
   children: [
     {
