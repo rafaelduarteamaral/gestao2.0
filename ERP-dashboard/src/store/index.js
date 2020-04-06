@@ -28,6 +28,7 @@ import cstTributacaos from './modules/cstTributacao'
 import historicos from './modules/historico'
 import aliquotas from './modules/aliquota'
 import tipoOperacaos from './modules/tipoOperacao'
+import movimentoBancarios from './modules/movimentoBancarios'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -58,7 +59,8 @@ const store = new Vuex.Store({
     cstTributacaos,
     historicos,
     aliquotas,
-    tipoOperacaos
+    tipoOperacaos,
+    movimentoBancarios
   },
   getters
 })

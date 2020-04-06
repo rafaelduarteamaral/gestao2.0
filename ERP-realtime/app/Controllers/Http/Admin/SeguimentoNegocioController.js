@@ -87,7 +87,7 @@ class SeguimentoNegocioController {
     } catch (error) {
       return response
         .status(400)
-        .send({ message: 'Não foi possível atualizar o seguimento de seguimento de negocio' })
+        .send({ message: 'Não foi possível atualizar o seguimento de negocio' })
     }
   }
 

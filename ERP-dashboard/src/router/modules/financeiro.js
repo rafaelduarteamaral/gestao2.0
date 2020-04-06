@@ -29,6 +29,26 @@ export default {
       name: 'EditTipoDocumento',
       meta: { title: 'Editar Tipo de Documento' },
       hidden: true
+    },
+    {
+      path: 'movimentoBancarios',
+      component: () => import('@/views/movimentoBancarios/index'),
+      name: 'movimentoBancarios',
+      meta: { title: 'Movimento Bancário' }
+    },
+    {
+      path: 'movimentoBancario',
+      component: () => import('@/views/movimentoBancarios/editor'),
+      name: 'NewMovimentoBancario',
+      meta: { title: 'Novo Movimento Bancário' },
+      hidden: true
+    },
+    {
+      path: 'movimentoBancario/:id',
+      component: () => import('@/views/movimentoBancarios/editor'),
+      name: 'EditMovimentoBancario',
+      meta: { title: 'Editar Movimento Bancário' },
+      hidden: true
     }
   ]
 }

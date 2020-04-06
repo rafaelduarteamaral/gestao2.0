@@ -18,6 +18,7 @@ class AliquotaTransformer extends TransformerAbstract {
      id: model.id,
      nome: model.nome,
      aliquota: model.aliquota,
+     empresa_id: model.empresa_id,
      pais_localidades_id: model.pais_localidades_id
     }
   }

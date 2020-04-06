@@ -57,6 +57,8 @@ const getters = {
   tipoOperacaos: state => state.tipoOperacaos,
   currentTipoOperacao: state => state.tipoOperacaos.currentAliquota,
   tipoDocumentos: state => state.tipoDocumentos,
-  currentTipoDocumento: state => state.tipoDocumentos.currentTipoDocumento
+  currentTipoDocumento: state => state.tipoDocumentos.currentTipoDocumento,
+  movimentoBancarios: state => state.movimentoBancarios,
+  currentMovimentoBancario: state => state.movimentoBancarios.currentMovimentoBancario
 }
 export default getters

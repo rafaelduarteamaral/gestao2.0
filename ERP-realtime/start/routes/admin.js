@@ -102,6 +102,12 @@ Route.group(() => {
    */
   Route.resource('Bancos', 'BancoController').apiOnly()
 
+  /**
+   * Bancos
+   */
+  Route.resource('MovimentoBancario', 'MovimentoBancarioController').apiOnly()
+
+
     /**
    * Unidades
    */
