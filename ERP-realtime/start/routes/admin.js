@@ -103,11 +103,13 @@ Route.group(() => {
   Route.resource('Bancos', 'BancoController').apiOnly()
 
   /**
-   * Bancos
+   * Movimento Bancário
    */
   Route.resource('MovimentoBancario', 'MovimentoBancarioController').apiOnly()
-
-
+  /**
+   * Condição de Pagamento
+   */
+  Route.resource('condicaoPagamentos', 'CondicaoPagamentoController').apiOnly()
     /**
    * Unidades
    */

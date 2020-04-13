@@ -182,6 +182,26 @@ export default {
       name: 'AllCoupons',
       hidden: false,
       meta: { title: 'Coupons', icon: '' }
+    },
+    {
+      path: 'condicaoPagamentos',
+      component: () => import('@/views/condicaoPagamento/index'),
+      name: 'condicaoPagamentos',
+      meta: { title: 'Condição de Pagamento' }
+    },
+    {
+      path: 'condicaoPagamento',
+      component: () => import('@/views/condicaoPagamento/editor'),
+      name: 'NewCondicaoPagamento',
+      meta: { title: 'Nova Condição de Pagamento' },
+      hidden: true
+    },
+    {
+      path: 'condicaoPagamento/:id',
+      component: () => import('@/views/condicaoPagamento/editor'),
+      name: 'EditCondicaoPagamento',
+      meta: { title: 'Editar Condição de Pagamento ' },
+      hidden: true
     }
   ]
 }
