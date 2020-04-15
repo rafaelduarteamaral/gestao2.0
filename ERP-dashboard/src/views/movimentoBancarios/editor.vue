@@ -5,7 +5,7 @@
         <el-col :span="24">
           <el-card class="box-card">
             <div slot="header">
-              <span>Informações do movimento bancário</span>
+              <span>Informações do Movimento Bancario</span>
             </div>
             <el-col :span="8">
               <el-form-item label="Banco Débito/ Origem:">

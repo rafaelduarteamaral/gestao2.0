@@ -30,6 +30,7 @@ import aliquotas from './modules/aliquota'
 import tipoOperacaos from './modules/tipoOperacao'
 import movimentoBancarios from './modules/movimentoBancarios'
 import condicaoPagamentos from './modules/condicaoPagamentos'
+import planejamentoFinanceiros from './modules/planejamentoFinanceiros'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -62,7 +63,8 @@ const store = new Vuex.Store({
     aliquotas,
     tipoOperacaos,
     movimentoBancarios,
-    condicaoPagamentos
+    condicaoPagamentos,
+    planejamentoFinanceiros
   },
   getters
 })

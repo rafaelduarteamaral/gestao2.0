@@ -4,7 +4,6 @@
 const Schema = use('Schema')
 
 class MovimentoBancarioSchema extends Schema {
-<<<<<<< Updated upstream
     up() {
         this.create('movimento_bancarios', (table) => {
             table.increments()
@@ -28,7 +27,6 @@ class MovimentoBancarioSchema extends Schema {
             table.timestamps()
         })
     }
-=======
   up () {
     this.create('movimento_bancarios', (table) => {
       table.increments()
@@ -52,7 +50,6 @@ class MovimentoBancarioSchema extends Schema {
       table.timestamps()
     })
   }
->>>>>>> Stashed changes
 
     down() {
         this.drop('movimento_bancarios')

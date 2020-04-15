@@ -115,6 +115,10 @@ Route.group(() => {
    */
   Route.resource('unidades', 'UnidadeController').apiOnly()
   /**
+   * Movimento Bancário
+   */
+  Route.resource('PlanejamentoFinanceiro', 'PlanejamentoFinanceiroController').apiOnly()
+  /**
    * Order Resource Routes
    */
   Route.post('orders/:id/discount', 'OrderController.applyDiscount')

@@ -49,6 +49,26 @@ export default {
       name: 'EditMovimentoBancario',
       meta: { title: 'Editar Movimento Bancário' },
       hidden: true
+    },
+    {
+      path: 'planejamentoFinanceiros',
+      component: () => import('@/views/planejamentoFinanceiros/index'),
+      name: 'planejamentoFinanceiros',
+      meta: { title: 'Planejamento Financeiro' }
+    },
+    {
+      path: 'movimentoBancario',
+      component: () => import('@/views/planejamentoFinanceiros/editor'),
+      name: 'NewPlanejamentoFinanceiro',
+      meta: { title: 'Novo Planejamento Financeiro' },
+      hidden: true
+    },
+    {
+      path: 'movimentoBancario/:id',
+      component: () => import('@/views/planejamentoFinanceiros/editor'),
+      name: 'EditPlanejamentoFinanceiro',
+      meta: { title: 'Editar Planejamento Financeiro' },
+      hidden: true
     }
   ]
 }

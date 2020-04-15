@@ -61,6 +61,8 @@ const getters = {
   movimentoBancarios: state => state.movimentoBancarios,
   currentMovimentoBancario: state => state.movimentoBancarios.currentMovimentoBancario,
   condicaoPagamentos: state => state.condicaoPagamentos,
-  currentCondicaoPagamento: state => state.condicaoPagamentos.currentCondicaoPagamento
+  currentCondicaoPagamento: state => state.condicaoPagamentos.currentCondicaoPagamento,
+  planejamentoFinanceiros: state => state.planejamentoFinanceiros,
+  currentPlanejamentoFinanceiro: state => state.planejamentoFinanceiros.currentPlanejamentoFinanceiro
 }
 export default getters
